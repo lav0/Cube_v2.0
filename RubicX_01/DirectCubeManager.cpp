@@ -31,6 +31,7 @@ DirectCubeManager::~DirectCubeManager()
 //=============================================================================
 HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context, 
                                        Dimention a_cube_dimention, 
+                                       size_t a_tesselation,
                                        UINT a_width, 
                                        UINT a_height
                                       )
@@ -39,9 +40,6 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
   a_context->GetDevice(&device);
     
   HRESULT hr(S_OK);
-  
-  /*m_batch_effect = std::make_unique<BasicEffect>(device);
-  m_batch_effect->SetVertexColorEnabled(true);*/
   
   // Load the Texture
   hr = DirectX::CreateDDSTextureFromFile(
@@ -53,7 +51,7 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
 
   if (FAILED(hr)) return hr;
   
-  m_cube = std::make_unique<DirectRubicsCube>(a_cube_dimention, a_context, m_p_texture);
+  m_cube = std::make_unique<DirectRubicsCube>(a_cube_dimention, a_tesselation, a_context, m_p_texture);
   m_cube->Initialize();
   
 	m_xmx_projection = XMMatrixPerspectiveFovLH( XM_PIDIV2, 
@@ -66,8 +64,6 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
   
   setUpMouseHandler();
       
-  //m_batch_effect->SetProjection(m_xmx_projection);
-
   return S_OK;
 }
 
@@ -110,9 +106,7 @@ void DirectCubeManager::setUpCamera()
 
   XMVECTOR At = XMVectorSet( 0.0f, 0.0f, 0.0f, 0.0f );
   XMVECTOR Up = XMVectorSet( 0.0f, sign * 1.0f, 0.0f, 0.0f );
-	m_xmx_view = XMMatrixLookAtLH( m_xvc_eye, At, Up );
-       
-  //m_batch_effect->SetView( m_xmx_view );    
+	m_xmx_view = XMMatrixLookAtLH( m_xvc_eye, At, Up );   
 }
 
 //=============================================================================

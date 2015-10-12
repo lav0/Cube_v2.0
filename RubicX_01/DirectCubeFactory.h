@@ -14,7 +14,8 @@ public:
   DirectCubeFactory(
     ID3D11DeviceContext* deviceContext,
     ID3D11ShaderResourceView* a_texture,
-    Dimention a_dimention
+    Dimention a_dimention,
+    size_t a_tessellation
   );
 
   virtual ~DirectCubeFactory() {}

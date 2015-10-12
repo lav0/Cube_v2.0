@@ -20,7 +20,7 @@ public:
 
   ~DirectCubeManager();
 
-  HRESULT Initialize(ID3D11DeviceContext* a_context, Dimention a_cube_dimention, UINT a_screen_width, UINT a_screen_height);
+  HRESULT Initialize(ID3D11DeviceContext* a_context, Dimention a_cube_dimention, size_t a_tesselation, UINT a_screen_width, UINT a_screen_height);
 
   void Render();
   
@@ -44,7 +44,6 @@ private:
   
   std::unique_ptr<DirectRubicsCube> m_cube;
   std::unique_ptr<MouseHandler>     m_mouse_handler;  
-  std::unique_ptr<BasicEffect>      m_batch_effect;
   
   std::queue<TurnCommand>           m_commands_sequence;
   

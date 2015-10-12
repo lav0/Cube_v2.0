@@ -8,12 +8,13 @@ using namespace DirectX;
 DirectCubeFactory::DirectCubeFactory(
   ID3D11DeviceContext* a_deviceContext,
   ID3D11ShaderResourceView* a_texture,
-  Dimention a_dimention
+  Dimention a_dimention,
+  size_t a_tessellation
 )
 : m_deviceContext(a_deviceContext)
 , m_texture(a_texture)
 , m_dimention(a_dimention)
-, m_tessellation(8)
+, m_tessellation(a_tessellation)
 {
 }
 

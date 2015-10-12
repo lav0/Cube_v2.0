@@ -4,6 +4,8 @@
 #include "DirectCore.h"
 #include "DirectCubeManager.h"
 
+#include "../ConfigReader/include/ConfigAccessor.h"
+
 #include <conio.h>
 #include <algorithm>
 
@@ -12,7 +14,8 @@
 //--------------------------------------------------------------------------------------
 HINSTANCE               g_hInst = nullptr;
 HWND                    g_hWnd  = nullptr;
-Dimention               g_CubeDimention = 2;
+Dimention               g_CubeDimention = 1;
+size_t                  g_tessellation = 2;
 long                    g_wnd_width  = 1024;
 long                    g_wnd_height = 800;
 bool                    g_mouse_down = false;
@@ -29,6 +32,7 @@ HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow );
 LRESULT CALLBACK    WndProc( HWND, UINT, WPARAM, LPARAM );
 
 void listerToInput();
+void ReadConfig();
 
 
 //--------------------------------------------------------------------------------------
@@ -53,9 +57,12 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
   if (FAILED(hr))
     return 0;
 
+  ReadConfig();
+
   DirectCubeManager manager;
   hr = manager.Initialize( core.GetImmediateContext(), 
                            g_CubeDimention, 
+                           g_tessellation,
                            g_wnd_width, 
                            g_wnd_height
                           );
@@ -247,4 +254,7 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 }
 
 
-
+void ReadConfig()
+{
+  ConfigAccessor::read_config(&g_CubeDimention, &g_tessellation, &g_wnd_width, &g_wnd_height);
+}

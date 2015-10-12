@@ -15,7 +15,8 @@ const float DirectRubicsCube::turningSpeed = 3.f;
 
 //=============================================================================
 DirectRubicsCube::DirectRubicsCube(
-  Dimention a_dimention, 
+  Dimention a_dimention,
+  size_t a_tessellation,
   ID3D11DeviceContext* deviceContext,
   ID3D11ShaderResourceView* a_texture
  )
@@ -29,7 +30,7 @@ DirectRubicsCube::DirectRubicsCube(
   , m_b_turning(false)
 {  
   m_unq_factory = std::make_unique<DirectCubeFactory>(
-    deviceContext, a_texture, a_dimention
+    deviceContext, a_texture, a_dimention, a_tessellation
   );
 }
 

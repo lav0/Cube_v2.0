@@ -21,6 +21,7 @@ public:
 
   DirectRubicsCube(
     Dimention a_dimention,
+    size_t a_tessellation,
     ID3D11DeviceContext* deviceContext,
     ID3D11ShaderResourceView* a_texture
   );

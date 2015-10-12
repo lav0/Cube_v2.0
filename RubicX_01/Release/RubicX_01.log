@@ -1,29 +1,11 @@
-﻿Build started 05/10/2015 09:41:26.
-     1>Project "D:\projects_collateral\projects\directX\RubicX_01\RubicX_01\RubicX_01.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 12/10/2015 19:38:48.
+     1>Project "D:\projects_collateral\projects\directX\RubicX_01\RubicX_01\RubicX_01.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"$C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D DEPTH_STENCIL /D TIME_MEASURE /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\RubicX_01.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"$C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D DEPTH_STENCIL /D TIME_MEASURE /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\RubicX_01.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt DirectCore.cpp DirectCubeFactory.cpp DirectCubeManager.cpp DirectRubicsCube.cpp DirectSingleCube.cpp GeometricPrimitiveCustom.cpp MouseHandler.cpp RubicX_01.cpp
-         DirectCore.cpp
-         DirectCubeFactory.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"$C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D DEPTH_STENCIL /D TIME_MEASURE /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\RubicX_01.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt DirectCubeManager.cpp RubicX_01.cpp
          DirectCubeManager.cpp
-         DirectRubicsCube.cpp
-         DirectSingleCube.cpp
-     1>DirectSingleCube.cpp(30): warning C4305: 'argument' : truncation from 'double' to 'float'
-         GeometricPrimitiveCustom.cpp
-     1>GeometricPrimitiveCustom.cpp(317): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(320): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(323): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(326): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(373): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(377): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(381): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(406): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(409): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         MouseHandler.cpp
          RubicX_01.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\projects_collateral\projects\directX\RubicX_01\Release\RubicX_01.exe" /INCREMENTAL:NO /NOLOGO d3d11.lib d3dcompiler.lib dxerr.lib dxguid.lib winmm.lib comctl32.lib MathLib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\projects_collateral\projects\directX\RubicX_01\Release\RubicX_01.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\projects_collateral\projects\directX\RubicX_01\Release\RubicX_01.lib" /MACHINE:X86 /SAFESEH Release\DirectCore.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\projects_collateral\projects\directX\RubicX_01\Release\RubicX_01.exe" /INCREMENTAL:NO /NOLOGO d3d11.lib d3dcompiler.lib dxerr.lib dxguid.lib winmm.lib comctl32.lib MathLib.lib ConfigReader.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\projects_collateral\projects\directX\RubicX_01\Release\RubicX_01.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\projects_collateral\projects\directX\RubicX_01\Release\RubicX_01.lib" /MACHINE:X86 /SAFESEH Release\DirectCore.obj
          Release\DirectCubeFactory.obj
          Release\DirectCubeManager.obj
          Release\DirectRubicsCube.obj
@@ -35,16 +17,9 @@
          D:\projects_collateral\projects\directX\RubicX_01\DirectXTK\Bin\Desktop_2012\Win32\Release\DirectXTK.lib
          Generating code
          Finished generating code
-     1>MathLib.lib(rcbCubeState.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'MathLib.lib(rcbCubeState.obj)' or at 'D:\projects_collateral\projects\directX\RubicX_01\Release\vc120.pdb'; linking object as if no debug info
-     1>MathLib.lib(rcbVector3D.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'MathLib.lib(rcbVector3D.obj)' or at 'D:\projects_collateral\projects\directX\RubicX_01\Release\vc120.pdb'; linking object as if no debug info
-     1>MathLib.lib(rcbUnitVector3D.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'MathLib.lib(rcbUnitVector3D.obj)' or at 'D:\projects_collateral\projects\directX\RubicX_01\Release\vc120.pdb'; linking object as if no debug info
-     1>MathLib.lib(rcbSphere.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'MathLib.lib(rcbSphere.obj)' or at 'D:\projects_collateral\projects\directX\RubicX_01\Release\vc120.pdb'; linking object as if no debug info
-     1>MathLib.lib(rcbPlaneForScreen.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'MathLib.lib(rcbPlaneForScreen.obj)' or at 'D:\projects_collateral\projects\directX\RubicX_01\Release\vc120.pdb'; linking object as if no debug info
-     1>MathLib.lib(rcbLine3D.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'MathLib.lib(rcbLine3D.obj)' or at 'D:\projects_collateral\projects\directX\RubicX_01\Release\vc120.pdb'; linking object as if no debug info
-     1>MathLib.lib(rcbPlane.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'MathLib.lib(rcbPlane.obj)' or at 'D:\projects_collateral\projects\directX\RubicX_01\Release\vc120.pdb'; linking object as if no debug info
          RubicX_01.vcxproj -> D:\projects_collateral\projects\directX\RubicX_01\Release\RubicX_01.exe
-     1>Done Building Project "D:\projects_collateral\projects\directX\RubicX_01\RubicX_01\RubicX_01.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "D:\projects_collateral\projects\directX\RubicX_01\RubicX_01\RubicX_01.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:10.56
+Time Elapsed 00:00:04.80
