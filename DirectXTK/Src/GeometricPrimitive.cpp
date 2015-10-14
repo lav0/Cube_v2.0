@@ -277,8 +277,30 @@ void XM_CALLCONV GeometricPrimitive::Impl::Draw(FXMMATRIX world, CXMMATRIX view,
     effect->SetView(view);
     effect->SetProjection(projection);
 
-    effect->SetDiffuseColor(color);
-    effect->SetAlpha(alpha);
+    /*effect->SetDiffuseColor(color);
+    effect->SetAlpha(alpha);*/
+
+    /*XMFLOAT3 light = { 0.0, 1.0, 0.0 };
+    effect->SetSpecularColor(DirectX::XMLoadFloat3(&light));*/
+
+    effect->SetLightEnabled(0, false);
+    effect->SetLightEnabled(1, false);
+    effect->SetLightEnabled(2, true);
+
+    float lean_value = 0.3;
+    float x0 = lean_value * cos(0.0);
+    float y0 = lean_value * sin(0.0);
+    float x1 = lean_value * cos(2 * XM_PI / 3);
+    float y1 = lean_value * sin(2 * XM_PI / 3);
+    float x2 = lean_value * cos(4 * XM_PI / 3);
+    float y2 = lean_value * sin(4 * XM_PI / 3);
+    
+    XMFLOAT3 light0 = { x0, y0, 2.0 };
+    XMFLOAT3 light1 = { x1, y1, 2.0 };
+    XMFLOAT3 light2 = { x2, y2, 2.0 };
+    effect->SetLightDirection(0, DirectX::XMLoadFloat3(&light0));
+    effect->SetLightDirection(1, DirectX::XMLoadFloat3(&light1));
+    effect->SetLightDirection(2, DirectX::XMLoadFloat3(&light2));
 
     Draw( effect, inputLayout, (alpha < 1.f), wireframe, setCustomState );
 }

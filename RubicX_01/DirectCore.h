@@ -84,11 +84,4 @@ private:
   ID3D11RenderTargetView*         m_p_render_target_view;
 
   ID3D11DepthStencilView*         m_depth_stencil_view;
-      
-
-protected:
-
-  std::unique_ptr<DirectRubicsCube> m_cube;
-  
-  std::queue<TurnCommand> m_commands_sequence;
 };
