@@ -46,6 +46,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
   
   HRESULT hr(S_OK);
 
+  ReadConfig();
+
   hr = InitWindow(hInstance, nCmdShow);
   
   if (FAILED(hr))
@@ -56,8 +58,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
   if (FAILED(hr))
     return 0;
-
-  ReadConfig();
 
   DirectCubeManager manager;
   hr = manager.Initialize( core.GetImmediateContext(), 

@@ -15,8 +15,10 @@ public:
     Dimention a_dimention,
     size_t a_tessellation,
     ID3D11DeviceContext* deviceContext,
-    ID3D11ShaderResourceView* a_texture
-    ) : DirectRubicsCube(a_dimention, a_tessellation, deviceContext, a_texture) {}
+    ID3D11ShaderResourceView* a_texture,
+    DirectX::CXMMATRIX view,
+    DirectX::CXMMATRIX projection
+    ) : DirectRubicsCube(a_dimention, a_tessellation, deviceContext, a_texture, view, projection) {}
 
 
 private:
@@ -41,8 +43,10 @@ public:
     ID3D11DeviceContext* deviceContext,
     ID3D11ShaderResourceView* a_texture,
     Dimention a_dimention,
-    size_t a_tessellation
-  ) : DirectCubeFactory(deviceContext, a_texture, a_dimention, a_tessellation) {}
+    size_t a_tessellation,
+    DirectX::CXMMATRIX view,
+    DirectX::CXMMATRIX projection
+  ) : DirectCubeFactory(deviceContext, a_texture, a_dimention, a_tessellation, view, projection) {}
 
   virtual std::unique_ptr<DirectSingleCube> CreateCube(
     const DirectX::XMFLOAT3&        origin,

@@ -51,9 +51,6 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
 
   if (FAILED(hr)) return hr;
   
-  m_cube = std::make_unique<DirectRubicsCube>(a_cube_dimention, a_tesselation, a_context, m_p_texture);
-  m_cube->Initialize();
-  
 	m_xmx_projection = XMMatrixPerspectiveFovLH( XM_PIDIV2, 
                                            a_width / (FLOAT)a_height, 
                                            1.f, 
@@ -63,7 +60,17 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
   setUpCamera();
   
   setUpMouseHandler();
-      
+
+  m_cube = std::make_unique<DirectRubicsCube>(
+    a_cube_dimention,
+    a_tesselation,
+    a_context,
+    m_p_texture,
+    m_xmx_view,
+    m_xmx_projection
+  );
+  m_cube->Initialize();
+
   return S_OK;
 }
 
@@ -148,7 +155,7 @@ void DirectCubeManager::Render()
     m_commands_sequence.pop();
   }
         
-  m_cube->Draw(m_xmx_view, m_xmx_projection);
+  m_cube->Draw();
 
 }
 

@@ -6,6 +6,8 @@
 
 #include <directxmath.h>
 #include <memory>
+#include <wrl.h>
+
 
 static const float rcb_to_float(eAngle a_e_angle)
 {
@@ -38,14 +40,16 @@ public:
     const CubeColorsMap&       colors,
     const rcbCubePosition&     place,
     float                      size,
-    size_t                     tessellation
+    size_t                     tessellation,
+    DirectX::CXMMATRIX         view,
+    DirectX::CXMMATRIX         projection
   );
 
   void Rotate(DirectX::CXMVECTOR a_quaternion);
 
   void Turn(eTurnAxis axis, eAngle angle);
 
-  void Draw(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+  void Draw();
 
   void Align(DirectX::CXMMATRIX basis);
 
@@ -54,8 +58,9 @@ public:
 private:
 
   std::unique_ptr<DirectX::GeometricPrimitive> m_geometry;
-  
-  ID3D11ShaderResourceView* m_texture;
+  std::unique_ptr<DirectX::BasicEffect> m_effect;
+
+  Microsoft::WRL::ComPtr<ID3D11InputLayout> m_input_layout;
 
   DirectX::XMFLOAT3   m_origin;
   DirectX::XMFLOAT3X3 m_rotation;

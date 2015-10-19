@@ -206,7 +206,7 @@ void buildQuaterCylinderOnEdge(
 //=============================================================================
 //
 //=============================================================================
-std::unique_ptr<GeometricPrimitive> GeometricPrimitiveCustom::CreateCubeAt(
+std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCubeAt(
   _In_ ID3D11DeviceContext* deviceContext, 
   CXMVECTOR                 centre, 
   float                     size, 
@@ -442,3 +442,6 @@ std::unique_ptr<GeometricPrimitive> GeometricPrimitiveCustom::CreateCubeAt(
 
     return Initialize(deviceContext, vertices, indices, rhcoords);
 }
+
+
+//=============================================================================

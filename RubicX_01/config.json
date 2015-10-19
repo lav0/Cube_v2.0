@@ -2,7 +2,7 @@
   "dimention" : 2,
   "tessellation" : 8,
   "screen resolution": {
-    "width": 1024,
-    "height": 800
+    "width": 500,
+    "height": 500
   }
 }

@@ -18,7 +18,9 @@ DirectRubicsCube::DirectRubicsCube(
   Dimention a_dimention,
   size_t a_tessellation,
   ID3D11DeviceContext* deviceContext,
-  ID3D11ShaderResourceView* a_texture
+  ID3D11ShaderResourceView* a_texture,
+  DirectX::CXMMATRIX view,
+  DirectX::CXMMATRIX projection
  )
   : m_position(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f)
   , m_dimention(a_dimention)
@@ -30,7 +32,7 @@ DirectRubicsCube::DirectRubicsCube(
   , m_b_turning(false)
 {  
   m_unq_factory = std::make_unique<DirectCubeFactory>(
-    deviceContext, a_texture, a_dimention, a_tessellation
+    deviceContext, a_texture, a_dimention, a_tessellation, view, projection
   );
 }
 
@@ -136,12 +138,12 @@ void DirectRubicsCube::TurnFace(const TurnCommand& a_turn_command)
 }
 
 //=============================================================================
-void DirectRubicsCube::Draw(CXMMATRIX view, CXMMATRIX projection)
+void DirectRubicsCube::Draw()
 {  
   std::for_each(m_subcubes.begin(), m_subcubes.end(), 
-    [&view, &projection](std::shared_ptr<DirectSingleCube> cube)
+    [](std::shared_ptr<DirectSingleCube> cube)
     {
-      cube->Draw(view, projection);
+      cube->Draw();
     }
   );
 }

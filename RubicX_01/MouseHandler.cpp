@@ -85,9 +85,9 @@ void MouseHandler::Listen(bool a_pressed, float a_x, float a_y)
   ) 
   {
     if (!rotationStartIsZero()) 
-    {
-      auto xvc0 = static_cast<XMVECTOR>(m_rotation_start);
-      auto xvc1 = static_cast<XMVECTOR>(point);
+    {      
+      auto xvc0 = XMLoadFloat3(&m_rotation_start);
+      auto xvc1 = XMLoadFloat3(&point);
 
       m_rotation_axis = XMVector3Normalize(XMVector3Cross(xvc0, xvc1));
       m_angle = XMVectorGetX(XMVector3AngleBetweenVectors(xvc0, xvc1));

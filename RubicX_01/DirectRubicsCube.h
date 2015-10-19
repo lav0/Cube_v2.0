@@ -23,7 +23,9 @@ public:
     Dimention a_dimention,
     size_t a_tessellation,
     ID3D11DeviceContext* deviceContext,
-    ID3D11ShaderResourceView* a_texture
+    ID3D11ShaderResourceView* a_texture,
+    DirectX::CXMMATRIX view,
+    DirectX::CXMMATRIX projection
   );
 
   virtual ~DirectRubicsCube() {}
@@ -34,7 +36,7 @@ public:
 
   void TurnFace(const TurnCommand&);
 
-  void Draw(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+  void Draw();
 
   void Update(float a_time_lapsed);
 

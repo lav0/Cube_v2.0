@@ -4,10 +4,12 @@
 
 
 #include "..\DirectXTK\Inc\GeometricPrimitive.h"
+#include "..\DirectXTK\Inc\Effects.h"
 
 #include "../RubicMath/include/rcbCubeState.h"
 
 #include <map>
+#include <algorithm>
 
 enum eCubeColor
 {
@@ -22,11 +24,15 @@ enum eCubeColor
 
 typedef std::map<eCubeSide, eCubeColor> CubeColorsMap;
 
+class GeometricPrimitiveSpecial : public DirectX::GeometricPrimitive
+{
+};
+
 class GeometricPrimitiveCustom : public DirectX::GeometricPrimitive
 {
 public:
-
-  static std::unique_ptr<GeometricPrimitive> __cdecl CreateCubeAt(
+    
+  static std::unique_ptr<DirectX::GeometricPrimitive> __cdecl CreateCubeAt(
     _In_ ID3D11DeviceContext* deviceContext, 
     DirectX::CXMVECTOR        centre, 
     float                     size, 

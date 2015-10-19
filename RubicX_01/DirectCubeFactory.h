@@ -15,7 +15,9 @@ public:
     ID3D11DeviceContext* deviceContext,
     ID3D11ShaderResourceView* a_texture,
     Dimention a_dimention,
-    size_t a_tessellation
+    size_t a_tessellation,
+    DirectX::CXMMATRIX view,
+    DirectX::CXMMATRIX projection
   );
 
   virtual ~DirectCubeFactory() {}
@@ -40,5 +42,8 @@ private:
 
   const Dimention           m_dimention;
   size_t                    m_tessellation;
+
+  DirectX::XMFLOAT4X4                m_view;
+  DirectX::XMFLOAT4X4                m_projection;
 
 };
