@@ -13,12 +13,9 @@ class TimeMeasureDirectRubicsCubeDecorator : public DirectRubicsCube
 public:
   TimeMeasureDirectRubicsCubeDecorator(
     Dimention a_dimention,
-    size_t a_tessellation,
-    ID3D11DeviceContext* deviceContext,
-    ID3D11ShaderResourceView* a_texture,
-    DirectX::CXMMATRIX view,
-    DirectX::CXMMATRIX projection
-    ) : DirectRubicsCube(a_dimention, a_tessellation, deviceContext, a_texture, view, projection) {}
+    std::unique_ptr<DirectCubeFactory>&& unq_factory
+  ) : DirectRubicsCube(a_dimention, std::move(unq_factory))
+  {}
 
 
 private:

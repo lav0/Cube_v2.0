@@ -3,10 +3,6 @@
 
 #include "TimeMeasureDecorator.h"
 
-#ifdef TIME_MEASURE
-#define DirectCubeFactory TimeMeasureDirectCubeFactoryDecorator
-#endif
-
 using namespace DirectX;
 
 const float DirectRubicsCube::bigcubeSize  = 4.f;
@@ -16,24 +12,12 @@ const float DirectRubicsCube::turningSpeed = 3.f;
 //=============================================================================
 DirectRubicsCube::DirectRubicsCube(
   Dimention a_dimention,
-  size_t a_tessellation,
-  ID3D11DeviceContext* deviceContext,
-  ID3D11ShaderResourceView* a_texture,
-  DirectX::CXMMATRIX view,
-  DirectX::CXMMATRIX projection
+  std::unique_ptr<DirectCubeFactory>&& unq_factory
  )
   : m_position(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f)
   , m_dimention(a_dimention)
-  , m_turning_axis_index(0)
-  , m_face_number(0)
-  , m_cur_turning_angle(0.f)
-  , m_aim_turning_angle(0.f)
-  , m_turning_direction(1)
-  , m_b_turning(false)
-{  
-  m_unq_factory = std::make_unique<DirectCubeFactory>(
-    deviceContext, a_texture, a_dimention, a_tessellation, view, projection
-  );
+  , m_unq_factory(std::move(unq_factory))
+{
 }
 
 //=============================================================================

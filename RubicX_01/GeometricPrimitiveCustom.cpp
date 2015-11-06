@@ -126,6 +126,8 @@ void buildTorusOnCorner(
   auto section_angle = XMVectorGetX(
     XMVector3AngleBetweenNormals(normal_start, normal_end));
 
+  std::vector<uint16_t> surface_narrow_side_indeces;
+
   for (size_t i=0; i <= tessellation; ++i)
   {
     float torus_angle = i * section_angle / tessellation;
@@ -147,15 +149,31 @@ void buildTorusOnCorner(
 
       if (j != 0 && i != tessellation)
       {
-        indices.push_back(vbase + i * stride + j);
-        indices.push_back(vbase + (i+1) * stride + (j-1));
-        indices.push_back(vbase + i * stride + (j-1));
+        indices.emplace_back(vbase + i * stride + j);
+        indices.emplace_back(vbase + (i + 1) * stride + (j - 1));
+        indices.emplace_back(vbase + i * stride + (j - 1));
 
-        indices.push_back(vbase + i * stride + j);
-        indices.push_back(vbase + (i+1) * stride + j);
-        indices.push_back(vbase + (i+1) * stride + (j-1));
+        indices.emplace_back(vbase + i * stride + j);
+        indices.emplace_back(vbase + (i + 1) * stride + j);
+        indices.emplace_back(vbase + (i + 1) * stride + (j - 1));
+      }
+
+      if (j == tessellation)
+      {
+        surface_narrow_side_indeces.emplace_back(vbase + i * stride + j);
       }
     }
+  }
+
+  for (size_t i = 1; i < surface_narrow_side_indeces.size() - 1; ++i)
+  {
+    auto first = surface_narrow_side_indeces[0];
+    auto second = surface_narrow_side_indeces[i];
+    auto third = surface_narrow_side_indeces[i + 1];
+
+    indices.emplace_back(first);
+    indices.emplace_back(third);
+    indices.emplace_back(second);
   }
 }
 
@@ -192,13 +210,13 @@ void buildQuaterCylinderOnEdge(
         
     if (i != tessellation)
     {
-      indices.push_back(vbase + i * 2);
-      indices.push_back(vbase + i * 2 + 1);
-      indices.push_back(vbase + i * 2 + 2);
+      indices.emplace_back(vbase + i * 2);
+      indices.emplace_back(vbase + i * 2 + 1);
+      indices.emplace_back(vbase + i * 2 + 2);
 
-      indices.push_back(vbase + i * 2 + 1);
-      indices.push_back(vbase + i * 2 + 3);
-      indices.push_back(vbase + i * 2 + 2);
+      indices.emplace_back(vbase + i * 2 + 1);
+      indices.emplace_back(vbase + i * 2 + 3);
+      indices.emplace_back(vbase + i * 2 + 2);
     }
   }
 }
@@ -281,10 +299,13 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
     std::vector<uint16_t>                    indices;
 
     {
+      const short FACE_SIDE_VERTEX_COUNT = 12;
+      const short EDGES_COUNT = 12;
+
       // calculate what size *vertices* and *indices* will have.
       size_t vertices_count =
-        12 * FaceCount +
-        12 * 2 * (tessellation + 1) +
+        FACE_SIDE_VERTEX_COUNT * FaceCount +
+        EDGES_COUNT * 2 * (tessellation + 1) +
         24 * (tessellation + 1) * (tessellation + 1);
 
       size_t indices_count =
@@ -345,12 +366,13 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
 
         int textureShift = static_cast<int>(colors.at(thisSide));
 
-        // Four vertices per face.
+        // Four main vertices per face.
         vertices.emplace_back(vertex0, normal, textureCoordinates[textureShift + 0]);
         vertices.emplace_back(vertex1, normal, textureCoordinates[textureShift + 1]);
         vertices.emplace_back(vertex2, normal, textureCoordinates[textureShift + 2]);
         vertices.emplace_back(vertex3, normal, textureCoordinates[textureShift + 3]);
         
+        // Extra eight (two in each corner) vertices per face
         vertices.emplace_back(vertex00_aux, normal, textureCoordinates[textureShift + 0]);
         vertices.emplace_back(vertex01_aux, normal, textureCoordinates[textureShift + 1]);
         vertices.emplace_back(vertex10_aux, normal, textureCoordinates[textureShift + 2]);

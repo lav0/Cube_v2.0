@@ -11,7 +11,9 @@
 
 #ifdef TIME_MEASURE
 #define DirectRubicsCube TimeMeasureDirectRubicsCubeDecorator
+#define DirectCubeFactory TimeMeasureDirectCubeFactoryDecorator
 #endif
+
 
 //=============================================================================
 DirectCubeManager::DirectCubeManager()
@@ -61,13 +63,13 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
   
   setUpMouseHandler();
 
+  auto factory = std::make_unique<DirectCubeFactory>(
+    a_context, m_p_texture, a_cube_dimention, a_tesselation, m_xmx_view, m_xmx_projection
+  );
+
   m_cube = std::make_unique<DirectRubicsCube>(
     a_cube_dimention,
-    a_tesselation,
-    a_context,
-    m_p_texture,
-    m_xmx_view,
-    m_xmx_projection
+    std::move(factory)
   );
   m_cube->Initialize();
 

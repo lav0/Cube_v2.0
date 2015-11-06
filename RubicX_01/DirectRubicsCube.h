@@ -1,12 +1,12 @@
 #pragma once
 
 #include "stdafx.h"
-#include "DirectCubeFactory.h"
 
 #include <vector>
 #include <memory>
 #include <algorithm>
 
+#include "DirectCubeFactory.h"
 
 struct TurnCommand {
   eTurnAxis axis;
@@ -20,12 +20,8 @@ class DirectRubicsCube
 public:
 
   DirectRubicsCube(
-    Dimention a_dimention,
-    size_t a_tessellation,
-    ID3D11DeviceContext* deviceContext,
-    ID3D11ShaderResourceView* a_texture,
-    DirectX::CXMMATRIX view,
-    DirectX::CXMMATRIX projection
+    Dimention a_dimention,    
+    std::unique_ptr<DirectCubeFactory>&& unq_factory
   );
 
   virtual ~DirectRubicsCube() {}
@@ -78,12 +74,12 @@ private:
   std::unique_ptr<DirectCubeFactory> m_unq_factory;
   
   TurnCommand m_cur_turning_command;
-  size_t      m_turning_axis_index;
-  Dimention   m_face_number;
-  float       m_cur_turning_angle;
-  float       m_aim_turning_angle;
-  short       m_turning_direction;
-  bool        m_b_turning;
+  size_t      m_turning_axis_index = 0;
+  Dimention   m_face_number        = 0;
+  float       m_cur_turning_angle  = 0.f;
+  float       m_aim_turning_angle  = 0.f;
+  short       m_turning_direction  = 1;
+  bool        m_b_turning          = false;
 
   std::vector<std::shared_ptr<DirectSingleCube>> m_turning_cubes;
 };
