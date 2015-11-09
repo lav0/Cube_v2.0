@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GeometricPrimitiveCustom.h"
 
+#include "../RubicMath/include/rcbVector3D.h"
+
 #include "..\DirectXTK\Inc\VertexTypes.h"
 
 #include <vector>
@@ -33,73 +35,111 @@ void fillInIndicesContainer(std::vector<uint16_t>& indices, const size_t& vbase)
   //
   // central square
   //
-  indices.push_back(vbase + 0);
-  indices.push_back(vbase + 1);
-  indices.push_back(vbase + 2);
+  indices.emplace_back(vbase + 0);
+  indices.emplace_back(vbase + 1);
+  indices.emplace_back(vbase + 2);
 
-  indices.push_back(vbase + 0);
-  indices.push_back(vbase + 2);
-  indices.push_back(vbase + 3);
+  indices.emplace_back(vbase + 0);
+  indices.emplace_back(vbase + 2);
+  indices.emplace_back(vbase + 3);
         
   //
   //  triangle of vertex0, vertex00_aux and vertex01_aux 
   //  coner triangle
-  indices.push_back(vbase + 0);
-  indices.push_back(vbase + 4);
-  indices.push_back(vbase + 5);
+  indices.emplace_back(vbase + 0);
+  indices.emplace_back(vbase + 4);
+  indices.emplace_back(vbase + 5);
   //  side triangle  1 
-  indices.push_back(vbase + 0);
-  indices.push_back(vbase + 5);
-  indices.push_back(vbase + 1);
+  indices.emplace_back(vbase + 0);
+  indices.emplace_back(vbase + 5);
+  indices.emplace_back(vbase + 1);
   //  side triangle  2
-  indices.push_back(vbase + 5);
-  indices.push_back(vbase + 6);
-  indices.push_back(vbase + 1);
+  indices.emplace_back(vbase + 5);
+  indices.emplace_back(vbase + 6);
+  indices.emplace_back(vbase + 1);
     
   //
   //  triangle of vertex1, vertex10_aux and vertex11_aux
   //  coner triangle
-  indices.push_back(vbase + 1);
-  indices.push_back(vbase + 6);
-  indices.push_back(vbase + 7);
+  indices.emplace_back(vbase + 1);
+  indices.emplace_back(vbase + 6);
+  indices.emplace_back(vbase + 7);
   //  side triangle  1
-  indices.push_back(vbase + 1);
-  indices.push_back(vbase + 7);
-  indices.push_back(vbase + 2);
+  indices.emplace_back(vbase + 1);
+  indices.emplace_back(vbase + 7);
+  indices.emplace_back(vbase + 2);
   //  side triangle  2
-  indices.push_back(vbase + 7);
-  indices.push_back(vbase + 8);
-  indices.push_back(vbase + 2);
+  indices.emplace_back(vbase + 7);
+  indices.emplace_back(vbase + 8);
+  indices.emplace_back(vbase + 2);
   
   //
   //  triangle of vertex2, vertex20_aux and vertex21_aux
   //
-  indices.push_back(vbase + 2);
-  indices.push_back(vbase + 8);
-  indices.push_back(vbase + 9);
+  indices.emplace_back(vbase + 2);
+  indices.emplace_back(vbase + 8);
+  indices.emplace_back(vbase + 9);
   
-  indices.push_back(vbase + 2);
-  indices.push_back(vbase + 9);
-  indices.push_back(vbase + 3);
+  indices.emplace_back(vbase + 2);
+  indices.emplace_back(vbase + 9);
+  indices.emplace_back(vbase + 3);
   
-  indices.push_back(vbase + 9);
-  indices.push_back(vbase + 10);
-  indices.push_back(vbase + 3);
+  indices.emplace_back(vbase + 9);
+  indices.emplace_back(vbase + 10);
+  indices.emplace_back(vbase + 3);
   
   //
   //  triangle of vertex2, vertex20_aux and vertex21_aux
   //
-  indices.push_back(vbase + 3);
-  indices.push_back(vbase + 10);
-  indices.push_back(vbase + 11);
+  indices.emplace_back(vbase + 3);
+  indices.emplace_back(vbase + 10);
+  indices.emplace_back(vbase + 11);
   
-  indices.push_back(vbase + 3);
-  indices.push_back(vbase + 11);
-  indices.push_back(vbase + 0);
+  indices.emplace_back(vbase + 3);
+  indices.emplace_back(vbase + 11);
+  indices.emplace_back(vbase + 0);
   
-  indices.push_back(vbase + 11);
-  indices.push_back(vbase + 4);
-  indices.push_back(vbase + 0);
+  indices.emplace_back(vbase + 11);
+  indices.emplace_back(vbase + 4);
+  indices.emplace_back(vbase + 0);
+}
+
+void closeGapInCorner(
+  CXMVECTOR face_normal,
+  CXMVECTOR normal_start,
+  CXMVECTOR normal_end,
+  CXMVECTOR corner_centre,
+  CXMVECTOR texture_coord,
+  float corner_radius,
+  size_t tessellation,
+  std::vector<uint16_t>& indices,
+  std::vector<VertexPositionNormalTexture>& vertices
+)
+{
+  XMVECTOR axis = XMVector3Normalize(face_normal);
+  
+  size_t vbase = vertices.size();
+
+  auto full_angle = XMVectorGetX(
+    XMVector3AngleBetweenNormals(normal_start, normal_end));
+
+  for (size_t i = 0; i <= tessellation; ++i)
+  {
+    auto angle = i * full_angle / tessellation;
+
+    XMVECTOR rotation = XMQuaternionRotationAxis(axis, angle);
+    XMVECTOR normal = XMVector3Normalize(XMVector3Rotate(normal_start, rotation));
+
+    XMVECTOR point = corner_centre + corner_radius * normal;
+
+    vertices.emplace_back(point, axis, texture_coord);
+
+    if (i != 0 && i != 1) {
+      indices.emplace_back(vbase);
+      indices.emplace_back(vbase + i);
+      indices.emplace_back(vbase + i - 1);
+    }
+  }
 }
 
 void buildTorusOnCorner(  
@@ -125,8 +165,6 @@ void buildTorusOnCorner(
 
   auto section_angle = XMVectorGetX(
     XMVector3AngleBetweenNormals(normal_start, normal_end));
-
-  std::vector<uint16_t> surface_narrow_side_indeces;
 
   for (size_t i=0; i <= tessellation; ++i)
   {
@@ -157,23 +195,7 @@ void buildTorusOnCorner(
         indices.emplace_back(vbase + (i + 1) * stride + j);
         indices.emplace_back(vbase + (i + 1) * stride + (j - 1));
       }
-
-      if (j == tessellation)
-      {
-        surface_narrow_side_indeces.emplace_back(vbase + i * stride + j);
-      }
     }
-  }
-
-  for (size_t i = 1; i < surface_narrow_side_indeces.size() - 1; ++i)
-  {
-    auto first = surface_narrow_side_indeces[0];
-    auto second = surface_narrow_side_indeces[i];
-    auto third = surface_narrow_side_indeces[i + 1];
-
-    indices.emplace_back(first);
-    indices.emplace_back(third);
-    indices.emplace_back(second);
   }
 }
 
@@ -301,16 +323,19 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
     {
       const short FACE_SIDE_VERTEX_COUNT = 12;
       const short EDGES_COUNT = 12;
+      const short CORNERS_PER_FACE = 4;
 
       // calculate what size *vertices* and *indices* will have.
       size_t vertices_count =
         FACE_SIDE_VERTEX_COUNT * FaceCount +
+        FaceCount * CORNERS_PER_FACE * (tessellation + 1) +
         EDGES_COUNT * 2 * (tessellation + 1) +
         24 * (tessellation + 1) * (tessellation + 1);
 
       size_t indices_count =
         FaceCount * (4 * 9 + 6) +
-        12 * 6 * tessellation +
+        3 * (FaceCount * CORNERS_PER_FACE * (tessellation - 1)) +
+        EDGES_COUNT * 6 * tessellation +
         24 * 6 * tessellation * tessellation;
 
       vertices.reserve(vertices_count);
@@ -322,6 +347,32 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
     auto indent = size * corner_rounding_coef;
 
     auto edge_rounding_coef = corner_rounding_coef * 0.8;
+
+    auto closeGaps =
+      [&centre, &size, &corner_rounding_coef, &edge_rounding_coef, &tessellation, &indices, &vertices]
+    (CXMVECTOR face_normal, CXMVECTOR normal1, CXMVECTOR texture)
+    {
+      assert(is_zero_dbl(XMVectorGetX(XMVector3Dot(face_normal, normal1))));
+
+      XMVECTOR axis = XMVector3Normalize(face_normal);
+
+      XMVECTOR start = normal1;
+      auto step = XM_PIDIV2;
+      for (float travel = 0.f; travel < XM_2PI - 0.01f; travel += step)
+      {
+        XMVECTOR end = XMVector3Rotate(start, XMQuaternionRotationAxis(axis, -step));
+
+        XMVECTOR point = XMVectorScale(
+          (start + end) * (1 - edge_rounding_coef) * (1 - corner_rounding_coef) + face_normal,
+          size
+          );
+
+        closeGapInCorner(face_normal, end, start, centre + point, texture,
+          size * corner_rounding_coef * (1 - edge_rounding_coef), tessellation, indices, vertices);
+
+        start = end;
+      }
+    };
 
     // Create each face in turn.
     for (int i = 0; i < FaceCount; i++)
@@ -381,6 +432,9 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
         vertices.emplace_back(vertex21_aux, normal, textureCoordinates[textureShift + 1]);
         vertices.emplace_back(vertex30_aux, normal, textureCoordinates[textureShift + 2]);
         vertices.emplace_back(vertex31_aux, normal, textureCoordinates[textureShift + 3]);
+
+        // close quater-circle gaps in corners on each surface
+        closeGaps(faceNormals[i], faceNormals[i > 1 ? 0 : 2], textureCoordinates[textureShift + 0]);
     }
 
     auto slickEdges = 

@@ -49,7 +49,7 @@ DirectSingleCube::DirectSingleCube(
                                                 immediate_context, 
                                                 XMLoadFloat3(&m_origin), 
                                                 m_size,
-                                                0.2,
+                                                0.2f,
                                                 tessellation,
                                                 colors,
                                                 false
@@ -71,7 +71,7 @@ DirectSingleCube::DirectSingleCube(
   m_effect->SetLightEnabled(1, true);
   m_effect->SetLightEnabled(2, true);
 
-  float lean_value = 0.6;
+  float lean_value = 0.6f;
 
   float x0(.0), y0(.0), x1(.0), y1(.0), x2(.0), y2(.0);
   XMScalarSinCos(&x0, &y0, 0.0);
