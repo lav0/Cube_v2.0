@@ -12,72 +12,13 @@ const float DirectRubicsCube::turningSpeed = 3.f;
 //=============================================================================
 DirectRubicsCube::DirectRubicsCube(
   Dimention a_dimention,
-  std::unique_ptr<DirectCubeFactory>&& unq_factory
+  std::vector<std::shared_ptr<DirectSingleCube>> single_cubes
  )
-  : m_position(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f)
-  , m_dimention(a_dimention)
-  , m_unq_factory(std::move(unq_factory))
+ : m_subcubes(std::move(single_cubes))
+ , m_position(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f)
+ , m_dimention(a_dimention)
 {
-}
-
-//=============================================================================
-void DirectRubicsCube::Initialize()
-{
-  m_turning_cubes.reserve(m_dimention * m_dimention);
-
-  try
-  {
-    buildSubcubes();
-  }
-  catch (std::exception& e)
-  {
-    if (m_unq_factory->DecreaseTessellation())
-    {
-      std::for_each(m_subcubes.begin(), m_subcubes.end(), 
-        [](std::shared_ptr<DirectSingleCube> cube)
-        {
-          cube.reset();
-        }
-      );
-      Initialize();
-    }
-    else
-    {
-      throw e;
-    }
-  }
-}
-
-//=============================================================================
-void DirectRubicsCube::buildSubcubes()
-{
-  float d_long = bigcubeSize / m_dimention;
-  float d_edge = subcubeEdge();
-  float d_half = bigcubeSize / 2;
-  
-  m_subcubes.reserve(m_dimention * m_dimention * m_dimention);
-
-  for (Dimention i = 0; i < m_dimention; ++i) {
-    for (Dimention j = 0; j < m_dimention; ++j) {
-      for (Dimention k = 0; k < m_dimention; ++k) 
-      {
-        DirectX::XMFLOAT3 vc_centre(
-          d_long/2 + i * d_long - d_half,
-          d_long/2 + j * d_long - d_half,
-          d_long/2 + k * d_long - d_half
-        );
-
-        float size = bigcubeSize;
-        
-        const std::array<Dimention,3> indeces = {i, j, k};
-
-        m_subcubes.push_back(m_unq_factory->CreateCube( vc_centre, 
-                                                        d_edge, 
-                                                        indeces
-                                                       ));
-      }
-    }
-  }
+  m_turning_cubes.clear();
 }
 
 //=============================================================================
@@ -252,15 +193,21 @@ void DirectRubicsCube::fillTurningCubesContrainer()
 }
 
 //=============================================================================
-float DirectRubicsCube::subcubeEdge() const
-{
-  return (bigcubeSize - clearance) / m_dimention;
-}
-
-//=============================================================================
 const float DirectRubicsCube::OuterSphereRadius()
 {
   return (bigcubeSize / 2) * sqrtf(3.0);
+}
+
+//=============================================================================
+const float DirectRubicsCube::RubicsCubeSize()
+{
+  return bigcubeSize;
+}
+
+//=============================================================================
+const float DirectRubicsCube::Clearance()
+{
+  return clearance;
 }
 
 //=============================================================================

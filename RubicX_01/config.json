@@ -1,8 +1,8 @@
 {
-  "dimention" : 2,
+  "dimention" : 3,
   "tessellation" : 8,
   "screen resolution": {
-    "width": 500,
-    "height": 500
+    "width": 1000,
+    "height": 1000
   }
 }

@@ -1,55 +1,5 @@
-﻿Build started 14/10/2015 17:33:04.
-     1>Project "D:\projects_collateral\projects\directX\RubicX_01\RubicX_01\RubicX_01.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"$C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D DEPTH_STENCIL /D TIME_MEASURE /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\RubicX_01.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt DirectCore.cpp DirectCubeFactory.cpp DirectCubeManager.cpp DirectRubicsCube.cpp DirectSingleCube.cpp GeometricPrimitiveCustom.cpp RubicX_01.cpp
-         DirectCore.cpp
-         DirectCubeFactory.cpp
-         DirectCubeManager.cpp
-         DirectRubicsCube.cpp
-         DirectSingleCube.cpp
-     1>DirectSingleCube.cpp(31): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>DirectSingleCube.cpp(31): error C2679: binary '=' : no operator found which takes a right-hand operand of type 'std::unique_ptr<DirectX::GeometricPrimitive,std::default_delete<_Ty>>' (or there is no acceptable conversion)
-                 with
-                 [
-                     _Ty=DirectX::GeometricPrimitive
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\memory(1487): could be 'std::unique_ptr<GeometricPrimitiveCustom,std::default_delete<_Ty>> &std::unique_ptr<_Ty,std::default_delete<_Ty>>::operator =(const std::unique_ptr<_Ty,std::default_delete<_Ty>> &)'
-                 with
-                 [
-                     _Ty=GeometricPrimitiveCustom
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\memory(1428): or       'std::unique_ptr<GeometricPrimitiveCustom,std::default_delete<_Ty>> &std::unique_ptr<_Ty,std::default_delete<_Ty>>::operator =(std::unique_ptr<_Ty,std::default_delete<_Ty>> &&) throw()'
-                 with
-                 [
-                     _Ty=GeometricPrimitiveCustom
-                 ]
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\memory(1357): or       'std::unique_ptr<GeometricPrimitiveCustom,std::default_delete<_Ty>> &std::unique_ptr<_Ty,std::default_delete<_Ty>>::operator =(std::nullptr_t) throw()'
-                 with
-                 [
-                     _Ty=GeometricPrimitiveCustom
-                 ]
-                 while trying to match the argument list '(std::unique_ptr<GeometricPrimitiveCustom,std::default_delete<_Ty>>, std::unique_ptr<DirectX::GeometricPrimitive,std::default_delete<_Ty>>)'
-                 with
-                 [
-                     _Ty=GeometricPrimitiveCustom
-                 ]
-                 and
-                 [
-                     _Ty=DirectX::GeometricPrimitive
-                 ]
-         GeometricPrimitiveCustom.cpp
-     1>GeometricPrimitiveCustom.cpp(317): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(320): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(323): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(326): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(373): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(377): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(381): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(406): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>GeometricPrimitiveCustom.cpp(409): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-         RubicX_01.cpp
-     1>Done Building Project "D:\projects_collateral\projects\directX\RubicX_01\RubicX_01\RubicX_01.vcxproj" (Build target(s)) -- FAILED.
+﻿Build started 19/01/2016 19:00:53.
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:06.88
+Time Elapsed 00:00:00.01

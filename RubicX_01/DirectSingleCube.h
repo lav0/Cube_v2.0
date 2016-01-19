@@ -29,6 +29,9 @@ enum eSingleCubePos
   SCP_CORNER = 2
 };
 
+static const float LIGHT_SOURCE_LEAN_FACTOR() { return 0.6f; }
+static const float LIGHT_SOURCE_SCALE_FACTOR() { return 0.6f; }
+
 class DirectSingleCube
 {
 public:
@@ -54,6 +57,10 @@ public:
   void Align(DirectX::CXMMATRIX basis);
 
   bool IsPlacedOn(Dimention x, Dimention y, Dimention z) const;
+
+private:
+
+  void setUpLighting();
   
 private:
 

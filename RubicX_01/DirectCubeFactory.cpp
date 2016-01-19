@@ -1,27 +1,34 @@
 #include "stdafx.h"
 #include "DirectCubeFactory.h"
 
+#include "..\DirectXTK\Inc\DDSTextureLoader.h"
 
 using namespace DirectX;
 
 //=============================================================================
 DirectCubeFactory::DirectCubeFactory(
   ID3D11DeviceContext* a_deviceContext,
-  ID3D11ShaderResourceView* a_texture,
   Dimention a_dimention,
   size_t a_tessellation,
   DirectX::CXMMATRIX view,
   DirectX::CXMMATRIX projection
 )
 : m_deviceContext(a_deviceContext)
-, m_texture(a_texture)
+, m_texture(nullptr)
 , m_dimention(a_dimention)
 , m_tessellation(a_tessellation)
 {
   XMStoreFloat4x4(&m_view, view);
   XMStoreFloat4x4(&m_projection, projection);
+
+  createTexture();
 }
 
+//=============================================================================
+DirectCubeFactory::~DirectCubeFactory()
+{
+  if (m_texture) m_texture->Release();
+}
 
 //=============================================================================
 std::unique_ptr<DirectSingleCube> DirectCubeFactory::CreateCube(
@@ -44,6 +51,25 @@ std::unique_ptr<DirectSingleCube> DirectCubeFactory::CreateCube(
     XMLoadFloat4x4(&m_view),
     XMLoadFloat4x4(&m_projection)
   );
+}
+
+//=============================================================================
+bool DirectCubeFactory::createTexture()
+{
+  ID3D11Device* device;
+  m_deviceContext->GetDevice(&device);
+
+  HRESULT hr(S_OK);
+
+  // Load the Texture
+  hr = DirectX::CreateDDSTextureFromFile(
+    device,
+    L"TextureGreen.dds",
+    nullptr,
+    &m_texture
+  );
+
+  return SUCCEEDED(hr);
 }
 
 

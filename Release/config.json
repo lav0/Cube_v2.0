@@ -1,0 +1,8 @@
+{
+  "dimention" : 2,
+  "tessellation" : 8,
+  "screen resolution": {
+    "width": 1920,
+    "height": 1200
+  }
+}

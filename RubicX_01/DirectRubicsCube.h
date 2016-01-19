@@ -20,13 +20,11 @@ class DirectRubicsCube
 public:
 
   DirectRubicsCube(
-    Dimention a_dimention,    
-    std::unique_ptr<DirectCubeFactory>&& unq_factory
+    Dimention a_dimention,
+    std::vector<std::shared_ptr<DirectSingleCube>> single_cubes
   );
 
   virtual ~DirectRubicsCube() {}
-
-  void Initialize();
 
   void Rotate(DirectX::CXMVECTOR a_quaternion);
 
@@ -40,11 +38,12 @@ public:
 
   const Dimention GetDimention() const;
   
+  static const float RubicsCubeSize();
   static const float OuterSphereRadius(); 
+  static const float Clearance();
 
 protected:
 
-  virtual void buildSubcubes();
   void alignSubcubes();
 
 private:
@@ -58,8 +57,6 @@ private:
   void endTurning();
 
   void fillTurningCubesContrainer();
-
-  float subcubeEdge() const;
 
   float deltaTurningAngle(float a_time_lapsed) const;
 

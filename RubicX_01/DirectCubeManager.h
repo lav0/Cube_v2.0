@@ -40,8 +40,6 @@ private:
 
 private:
   
-  ID3D11ShaderResourceView*         m_p_texture;
-  
   std::unique_ptr<DirectRubicsCube> m_cube;
   std::unique_ptr<MouseHandler>     m_mouse_handler;  
   

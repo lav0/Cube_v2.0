@@ -49,7 +49,7 @@ namespace DirectX
     class GeometricPrimitive
     {
     public:
-        ~GeometricPrimitive();
+        virtual ~GeometricPrimitive();
         
         // Factory methods.
         static std::unique_ptr<GeometricPrimitive> __cdecl CreateCube         (_In_ ID3D11DeviceContext* deviceContext, float size = 1, bool rhcoords = true);

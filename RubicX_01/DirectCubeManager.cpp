@@ -4,21 +4,19 @@
 #include <d3d11_1.h>
 #include <directxmath.h>
 
-#include "..\DirectXTK\Inc\DDSTextureLoader.h"
 #include "..\DirectXTK\Inc\VertexTypes.h"
 
+#include "RubicsCubeBuilder.h"
 #include "TimeMeasureDecorator.h"
 
 #ifdef TIME_MEASURE
-#define DirectRubicsCube TimeMeasureDirectRubicsCubeDecorator
 #define DirectCubeFactory TimeMeasureDirectCubeFactoryDecorator
 #endif
 
 
 //=============================================================================
 DirectCubeManager::DirectCubeManager()
-  : m_p_texture(nullptr)
-  , m_xvc_eye(initialEyePosition())
+  : m_xvc_eye(initialEyePosition())
   , m_time_moment(0.f)
   , m_time_lapsed(0.f)
 {
@@ -27,7 +25,6 @@ DirectCubeManager::DirectCubeManager()
 //=============================================================================
 DirectCubeManager::~DirectCubeManager()
 {
-  if (m_p_texture) m_p_texture->Release();
 }
 
 //=============================================================================
@@ -38,21 +35,6 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
                                        UINT a_height
                                       )
 {
-  ID3D11Device* device;
-  a_context->GetDevice(&device);
-    
-  HRESULT hr(S_OK);
-  
-  // Load the Texture
-  hr = DirectX::CreateDDSTextureFromFile(
-    device, 
-    L"TextureGreen.dds", 
-    nullptr, 
-    &m_p_texture
-  );  
-
-  if (FAILED(hr)) return hr;
-  
 	m_xmx_projection = XMMatrixPerspectiveFovLH( XM_PIDIV2, 
                                            a_width / (FLOAT)a_height, 
                                            1.f, 
@@ -64,14 +46,12 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
   setUpMouseHandler();
 
   auto factory = std::make_unique<DirectCubeFactory>(
-    a_context, m_p_texture, a_cube_dimention, a_tesselation, m_xmx_view, m_xmx_projection
+    a_context, a_cube_dimention, a_tesselation, m_xmx_view, m_xmx_projection
   );
 
-  m_cube = std::make_unique<DirectRubicsCube>(
-    a_cube_dimention,
-    std::move(factory)
-  );
-  m_cube->Initialize();
+  RubicsCubeBuilder builder(a_cube_dimention, std::move(factory));
+
+  m_cube = builder.build_cube();
 
   return S_OK;
 }
