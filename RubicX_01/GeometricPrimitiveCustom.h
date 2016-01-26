@@ -24,10 +24,6 @@ enum eCubeColor
 
 typedef std::map<eCubeSide, eCubeColor> CubeColorsMap;
 
-class GeometricPrimitiveSpecial : public DirectX::GeometricPrimitive
-{
-};
-
 class GeometricPrimitiveCustom : public DirectX::GeometricPrimitive
 {
 public:

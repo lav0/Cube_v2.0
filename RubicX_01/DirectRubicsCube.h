@@ -68,8 +68,6 @@ private:
 
   const Dimention m_dimention;
 
-  std::unique_ptr<DirectCubeFactory> m_unq_factory;
-  
   TurnCommand m_cur_turning_command;
   size_t      m_turning_axis_index = 0;
   Dimention   m_face_number        = 0;

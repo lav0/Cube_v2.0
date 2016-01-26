@@ -3,71 +3,18 @@
 #include "../DirectXTK/Src/PlatformHelpers.h"
 
 using namespace DirectX;
-using namespace Microsoft::WRL;
 
-//=============================================================================
-static void CreateInputLayout(_In_ ID3D11Device* device, IEffect* effect, _Outptr_ ID3D11InputLayout** pInputLayout)
-{
-  assert(pInputLayout != 0);
-
-  void const* shaderByteCode;
-  size_t byteCodeLength;
-
-  effect->GetVertexShaderBytecode(&shaderByteCode, &byteCodeLength);
-
-  ThrowIfFailed(
-    device->CreateInputLayout(VertexPositionNormalTexture::InputElements,
-    VertexPositionNormalTexture::InputElementCount,
-    shaderByteCode, byteCodeLength,
-    pInputLayout)
-    );
-
-  //SetDebugObjectName(*pInputLayout, "DirectXTK:GeometricPrimitive");
-}
-
-//=============================================================================
-//
 //=============================================================================
 DirectSingleCube::DirectSingleCube(
-  ID3D11DeviceContext*       immediate_context,
-  ID3D11ShaderResourceView*  texture,
-  XMFLOAT3                   origin,
-  const CubeColorsMap&       colors,
-  const rcbCubePosition&     place,
-  float                      size,
-  size_t                     tessellation,
-  DirectX::CXMMATRIX         view,
-  DirectX::CXMMATRIX         projection
+  std::unique_ptr<IGeometry>&& geometry,
+  std::unique_ptr<IEffectWrapper>&& effect_wrapper,
+  const rcbCubePosition&     place
 )
-  : m_origin(origin)
-  , m_size(size)
+  : m_geometry(std::move(geometry))
+  , m_effect_wrapper(std::move(effect_wrapper))
   , m_place(place)
 {
   XMStoreFloat3x3(&m_rotation, XMMatrixIdentity());
-  
-  m_geometry = GeometricPrimitiveCustom::CreateCubeAt(
-                                                immediate_context, 
-                                                XMLoadFloat3(&m_origin), 
-                                                m_size,
-                                                0.2f,
-                                                tessellation,
-                                                colors,
-                                                false
-                                                );
-
-  ComPtr<ID3D11Device> device;
-  immediate_context->GetDevice(&device);
-
-  m_effect = std::make_unique<BasicEffect>(device.Get());
-  m_effect->EnableDefaultLighting();
-  m_effect->SetTextureEnabled(true);
-  ::CreateInputLayout(device.Get(), m_effect.get(), &m_input_layout);
-
-  m_effect->SetTexture(texture);
-  m_effect->SetView(view);
-  m_effect->SetProjection(projection);
-
-  setUpLighting();
 }
 
 //=============================================================================
@@ -90,9 +37,12 @@ void DirectSingleCube::Draw()
 {
   XMMATRIX pos = XMLoadFloat3x3(&m_rotation);
 
-  m_effect->SetWorld(pos);
+  auto* effect = (DirectX::BasicEffect*) m_effect_wrapper->GetEffect();
+  effect->SetWorld(pos);
+
+  auto* layout = (ID3D11InputLayout*)m_effect_wrapper->GetLayout();
   
-  m_geometry->Draw(m_effect.get(), m_input_layout.Get());
+  m_geometry->Draw(m_effect_wrapper.get());
 }
 
 //=============================================================================
@@ -155,36 +105,7 @@ void DirectSingleCube::Align(DirectX::CXMMATRIX basis)
 //=============================================================================
 bool DirectSingleCube::IsPlacedOn(Dimention x, Dimention y, Dimention z) const
 {
-  return m_place.getX() == x && m_place.getY() == y && m_place.getZ() == z;
-}
-
-//=============================================================================
-void DirectSingleCube::setUpLighting()
-{
-  m_effect->SetLightEnabled(0, true);
-  m_effect->SetLightEnabled(1, true);
-  m_effect->SetLightEnabled(2, true);
-
-  float lean_value = LIGHT_SOURCE_LEAN_FACTOR();
-
-  float x0(.0), y0(.0), x1(.0), y1(.0), x2(.0), y2(.0);
-  XMScalarSinCos(&x0, &y0, 0.0);
-  XMScalarSinCos(&x1, &y1, 2 * XM_PI / 3);
-  XMScalarSinCos(&x2, &y2, 4 * XM_PI / 3);
-
-  float scale_factor = LIGHT_SOURCE_SCALE_FACTOR();
-
-  XMVECTOR scale = XMVectorSet(
-    scale_factor * lean_value,
-    scale_factor * lean_value,
-    scale_factor,
-    .0f);
-
-  XMVECTOR light0 = XMVectorMultiply(scale, XMVectorSet(x0, y0, 0.2f, .0f));
-  XMVECTOR light1 = XMVectorMultiply(scale, XMVectorSet(x1, y1, 0.5f, .0f));
-  XMVECTOR light2 = XMVectorMultiply(scale, XMVectorSet(x2, y2, 0.7f, .0f));
-
-  m_effect->SetLightDirection(0, light0);
-  m_effect->SetLightDirection(1, light1);
-  m_effect->SetLightDirection(2, light2);
+  return m_place.getX() == x && 
+         m_place.getY() == y && 
+         m_place.getZ() == z;
 }

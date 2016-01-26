@@ -5,6 +5,13 @@
 
 using namespace DirectX;
 
+//
+//
+// remove later!
+#include "DirectFactory.h"
+
+
+
 //=============================================================================
 DirectCubeFactory::DirectCubeFactory(
   ID3D11DeviceContext* a_deviceContext,
@@ -22,6 +29,8 @@ DirectCubeFactory::DirectCubeFactory(
   XMStoreFloat4x4(&m_projection, projection);
 
   createTexture();
+
+  m_geometry_factory = std::make_unique<DirectFactory>(a_deviceContext, m_texture);
 }
 
 //=============================================================================
@@ -40,16 +49,22 @@ std::unique_ptr<DirectSingleCube> DirectCubeFactory::CreateCube(
   CubeColorsMap   colors(customColors(cubeIndeces));
   rcbCubePosition place(m_dimention-1, cubeIndeces[0], cubeIndeces[1], cubeIndeces[2]);
 
-  return std::make_unique<DirectSingleCube>(
-    m_deviceContext, 
-    m_texture, 
-    a_origin, 
-    colors, 
-    place,
+  auto geometry = m_geometry_factory->CreateCubeGeometryAt(    
+    a_origin,
+    colors,
     a_size,
-    m_tessellation,
+    m_tessellation
+  );
+
+  auto effect = m_geometry_factory->CreateEffect(
     XMLoadFloat4x4(&m_view),
     XMLoadFloat4x4(&m_projection)
+  );
+
+  return std::make_unique<DirectSingleCube>(
+    std::move(geometry),
+    std::move(effect),
+    place
   );
 }
 

@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 
+#include "IFactory.h"
 #include "DirectSingleCube.h"
 
 #include <memory>
@@ -37,6 +38,8 @@ private:
   bool createTexture();
   
 private:
+
+  std::unique_ptr<IFactory> m_geometry_factory;
 
   ID3D11DeviceContext*      m_deviceContext;
   ID3D11ShaderResourceView* m_texture;
