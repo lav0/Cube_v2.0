@@ -52,7 +52,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>DEPTH_STENCIL;TIME_MEASURE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEPTH_STENCIL;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -86,9 +86,14 @@
     <ClInclude Include="DirectCore.h" />
     <ClInclude Include="DirectCubeFactory.h" />
     <ClInclude Include="DirectCubeManager.h" />
+    <ClInclude Include="DirectEffectWrapper.h" />
+    <ClInclude Include="DirectFactory.h" />
+    <ClInclude Include="DirectGeometry.h" />
     <ClInclude Include="DirectRubicsCube.h" />
     <ClInclude Include="DirectSingleCube.h" />
     <ClInclude Include="GeometricPrimitiveCustom.h" />
+    <ClInclude Include="IFactory.h" />
+    <ClInclude Include="IGeometry.h" />
     <ClInclude Include="IKeyboardListener.h" />
     <ClInclude Include="MouseHandler.h" />
     <ClInclude Include="RubicsCubeBuilder.h" />
@@ -100,6 +105,9 @@
     <ClCompile Include="DirectCore.cpp" />
     <ClCompile Include="DirectCubeFactory.cpp" />
     <ClCompile Include="DirectCubeManager.cpp" />
+    <ClCompile Include="DirectEffectWrapper.cpp" />
+    <ClCompile Include="DirectFactory.cpp" />
+    <ClCompile Include="DirectGeometry.cpp" />
     <ClCompile Include="DirectRubicsCube.cpp" />
     <ClCompile Include="DirectSingleCube.cpp" />
     <ClCompile Include="GeometricPrimitiveCustom.cpp" />
