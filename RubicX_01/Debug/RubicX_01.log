@@ -1,24 +1,14 @@
-﻿Build started 27/01/2016 11:37:24.
+﻿Build started 27/01/2016 17:14:51.
      1>Project "D:\projects_collateral\projects\directX\RubicX_01\RubicX_01\RubicX_01.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"$C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" /ZI /nologo /W3 /WX- /Od /Oy- /D RENDER_DRX /D DEPTH_STENCIL /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\RubicX_01.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CustomPrimitiveBuilder.cpp DirectCore.cpp DirectCubeFactory.cpp DirectCubeManager.cpp DirectEffectWrapper.cpp DirectFactory.cpp DirectGeometry.cpp DirectRubicsCube.cpp DirectSingleCube.cpp GeometricPrimitiveCustom.cpp RubicX_01.cpp RubicsCubeBuilder.cpp
          CustomPrimitiveBuilder.cpp
+     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\customprimitivebuilder.cpp(89): warning C4244: 'initializing' : conversion from 'double' to 'const float', possible loss of data
          Generating Code...
          Compiling...
          RubicsCubeBuilder.cpp
          RubicX_01.cpp
          GeometricPrimitiveCustom.cpp
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(366): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(371): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(389): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(392): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(395): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(398): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(449): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(453): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(457): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(482): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>d:\projects_collateral\projects\directx\rubicx_01\rubicx_01\geometricprimitivecustom.cpp(485): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
          DirectSingleCube.cpp
          DirectRubicsCube.cpp
          DirectGeometry.cpp
@@ -56,4 +46,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:14.28
+Time Elapsed 00:00:19.16

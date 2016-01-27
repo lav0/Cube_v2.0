@@ -1,5 +1,5 @@
-﻿Build started 27/01/2016 10:07:30.
-     1>Project "D:\projects_collateral\projects\directX\RubicX_01\DirectXTK\DirectXTK_Desktop_2012.vcxproj" on node 2 (Build target(s)).
+﻿Build started 27/01/2016 16:43:55.
+     1>Project "D:\projects_collateral\projects\directX\RubicX_01\DirectXTK\DirectXTK_Desktop_2012.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\projects_collateral\projects\directX\RubicX_01\DirectXTK\Inc /I"$C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" /ZI /nologo /W4 /WX- /Od /Oy- /D _WIN32_WINNT=0x0600 /D _WIN7_PLATFORM_UPDATE /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /arch:SSE2 /fp:fast /Zc:wchar_t /Zc:forScope /Yc"pch.h" /Fp"Bin\Desktop_2012\Win32\Debug\DirectXTK.pch" /Fo"Bin\Desktop_2012\Win32\Debug\\" /Fd"Bin\Desktop_2012\Win32\Debug\DirectXTK.pdb" /Gd /TP /analyze- /errorReport:prompt Src\pch.cpp
          pch.cpp
@@ -62,8 +62,8 @@
          Bin\Desktop_2012\Win32\Debug\VertexTypes.obj
          Bin\Desktop_2012\Win32\Debug\WICTextureLoader.obj
          DirectXTK_Desktop_2012.vcxproj -> D:\projects_collateral\projects\directX\RubicX_01\DirectXTK\Bin\Desktop_2012\Win32\Debug\DirectXTK.lib
-     1>Done Building Project "D:\projects_collateral\projects\directX\RubicX_01\DirectXTK\DirectXTK_Desktop_2012.vcxproj" (Build target(s)).
+     1>Done Building Project "D:\projects_collateral\projects\directX\RubicX_01\DirectXTK\DirectXTK_Desktop_2012.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:06.27
+Time Elapsed 00:00:07.76
