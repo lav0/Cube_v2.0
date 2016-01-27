@@ -4,7 +4,8 @@
 //=============================================================================
 DirectFactory::DirectFactory(
   _In_ ID3D11DeviceContext* deviceContext,
-  ID3D11ShaderResourceView* texture)
+  ID3D11ShaderResourceView* texture
+)
 : m_context(deviceContext)
 , m_texture(texture)
 {
@@ -18,20 +19,17 @@ std::unique_ptr<IGeometry> DirectFactory::CreateCubeGeometryAt(
   size_t                     tessellation
   )
 {
-  std::unique_ptr<IGeometry> geometryWrapper = 
-    std::make_unique<DirectGeometry>(
-      GeometricPrimitiveCustom::CreateCubeAt(
-      m_context,
-      XMLoadFloat3(&origin),
-      size,
-      0.2f,
-      tessellation,
-      colors,
-      false
-      )
-    );
+  auto drx_primitive = GeometricPrimitiveCustom::CreateCubeAt(
+    m_context,
+    XMLoadFloat3(&origin),
+    size,
+    0.2f,
+    tessellation,
+    colors,
+    false
+  );
 
-  return geometryWrapper;
+  return std::make_unique<DirectGeometry>(std::move(drx_primitive));
 }
 
 //=============================================================================

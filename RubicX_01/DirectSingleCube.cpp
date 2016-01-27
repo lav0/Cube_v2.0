@@ -37,11 +37,8 @@ void DirectSingleCube::Draw()
 {
   XMMATRIX pos = XMLoadFloat3x3(&m_rotation);
 
-  auto* effect = (DirectX::BasicEffect*) m_effect_wrapper->GetEffect();
-  effect->SetWorld(pos);
+  m_effect_wrapper->SetWorld(pos);
 
-  auto* layout = (ID3D11InputLayout*)m_effect_wrapper->GetLayout();
-  
   m_geometry->Draw(m_effect_wrapper.get());
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IGeometry.h"
+#include "GeometricPrimitiveCustom.h"
 
 class DirectGeometry : public IGeometry
 {

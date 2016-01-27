@@ -10,14 +10,15 @@ public:
 
   DirectFactory(
     _In_ ID3D11DeviceContext* deviceContext,
-    ID3D11ShaderResourceView* texture);
+    ID3D11ShaderResourceView* texture
+  );
 
   std::unique_ptr<IGeometry> CreateCubeGeometryAt(
     DirectX::XMFLOAT3          origin,
     const CubeColorsMap&       colors,
     float                      size,
     size_t                     tessellation
-    ) override;
+  ) override;
 
   std::unique_ptr<IEffectWrapper> CreateEffect(
     DirectX::CXMMATRIX         view,

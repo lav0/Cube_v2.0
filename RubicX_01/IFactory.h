@@ -1,18 +1,21 @@
 #pragma once
 
 #include "IGeometry.h"
+#include "GeometricPrimitiveCustom.h"
 
 struct IFactory
 {
+  virtual ~IFactory() {}
+
   virtual std::unique_ptr<IGeometry> CreateCubeGeometryAt(
-    DirectX::XMFLOAT3          origin,
+    VECTOR3_DFN                origin,
     const CubeColorsMap&       colors,
     float                      size,
     size_t                     tessellation
     ) = 0;
 
   virtual std::unique_ptr<IEffectWrapper> CreateEffect(
-    DirectX::CXMMATRIX         view,
-    DirectX::CXMMATRIX         projection
+    MATRIX4X4_DFN         view,
+    MATRIX4X4_DFN         projection
   ) = 0;
 };

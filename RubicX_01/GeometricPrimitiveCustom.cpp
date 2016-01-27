@@ -317,6 +317,8 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
         {  1.f, 0 }
     };
 
+    CustomPrimitiveBuilder builder(tessellation);
+
     std::vector<VertexPositionNormalTexture> vertices;
     std::vector<uint16_t>                    indices;
 
@@ -343,8 +345,6 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
     }
 
     size /= 2;
-
-    auto indent = size * corner_rounding_coef;
 
     auto edge_rounding_coef = corner_rounding_coef * 0.8;
 

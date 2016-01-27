@@ -20,6 +20,8 @@ public:
 
   void* GetEffect() const override;
   void* GetLayout() const override;
+
+  void SetWorld(DirectX::CXMMATRIX world) override;
   
 private:
 

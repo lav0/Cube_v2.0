@@ -5,24 +5,7 @@
 
 #include "..\DirectXTK\Inc\GeometricPrimitive.h"
 #include "..\DirectXTK\Inc\Effects.h"
-
-#include "../RubicMath/include/rcbCubeState.h"
-
-#include <map>
-#include <algorithm>
-
-enum eCubeColor
-{
-  CC_BLACK     = 0,
-  CC_GREEN     = 4,
-  CC_RED       = 8,
-  CC_BLUE      = 12,
-  CC_ORANGE    = 16,
-  CC_YELLOW    = 20,
-  CC_TURQUOISE = 24
-};
-
-typedef std::map<eCubeSide, eCubeColor> CubeColorsMap;
+#include "CustomPrimitiveBuilder.h"
 
 class GeometricPrimitiveCustom : public DirectX::GeometricPrimitive
 {

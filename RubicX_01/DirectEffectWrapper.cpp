@@ -67,6 +67,12 @@ void* DirectEffectWrapper::GetLayout() const
 }
 
 //=============================================================================
+void DirectEffectWrapper::SetWorld(DirectX::CXMMATRIX world)
+{
+  m_effect->SetWorld(world);
+}
+
+//=============================================================================
 void DirectEffectWrapper::setUpLighting()
 {
   m_effect->SetLightEnabled(0, true);
