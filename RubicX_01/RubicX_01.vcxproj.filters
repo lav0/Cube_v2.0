@@ -75,6 +75,12 @@
     <ClInclude Include="CustomPrimitiveBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPrimitiveCubeInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHARED_DEFS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -116,7 +122,7 @@
     <ClCompile Include="DirectEffectWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CustomPrimitiveBuilder.cpp">
+    <ClCompile Include="CustomPrimitiveCubeInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

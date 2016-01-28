@@ -1,10 +1,6 @@
 #pragma once
 
-#ifdef RENDER_DRX
-#include "GeometricPrimitiveCustom.h"
-#define MATRIX4X4_DFN DirectX::CXMMATRIX
-#define VECTOR3_DFN   DirectX::XMFLOAT3
-#endif
+#include "SHARED_DEFS.h"
 
 struct IEffectWrapper
 {

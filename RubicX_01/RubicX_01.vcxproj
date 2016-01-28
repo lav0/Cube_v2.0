@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomPrimitiveBuilder.h" />
+    <ClInclude Include="CustomPrimitiveCubeInfo.h" />
     <ClInclude Include="DirectCore.h" />
     <ClInclude Include="DirectCubeFactory.h" />
     <ClInclude Include="DirectCubeManager.h" />
@@ -98,12 +99,13 @@
     <ClInclude Include="IKeyboardListener.h" />
     <ClInclude Include="MouseHandler.h" />
     <ClInclude Include="RubicsCubeBuilder.h" />
+    <ClInclude Include="SHARED_DEFS.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeMeasureDecorator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CustomPrimitiveBuilder.cpp" />
+    <ClCompile Include="CustomPrimitiveCubeInfo.cpp" />
     <ClCompile Include="DirectCore.cpp" />
     <ClCompile Include="DirectCubeFactory.cpp" />
     <ClCompile Include="DirectCubeManager.cpp" />

@@ -26,7 +26,12 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
   assert(corner_rounding_coef >= 0);
   assert(corner_rounding_coef < 1);
   
-  CustomPrimitiveBuilder builder(tessellation, corner_rounding_coef, size, colors);
+  CustomPrimitiveBuilder<VertexPositionNormalTexture> builder(
+    tessellation, 
+    corner_rounding_coef, 
+    size, 
+    colors
+  );
 
   builder.CreateFaces(centre);
   builder.CreateEdges(centre);
