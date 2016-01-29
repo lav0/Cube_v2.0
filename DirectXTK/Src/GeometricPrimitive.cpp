@@ -288,8 +288,8 @@ void XM_CALLCONV GeometricPrimitive::Impl::Draw(FXMMATRIX world, CXMMATRIX view,
     effect->SetLightEnabled(2, true);
 
     float lean_value = 0.3;
-    float x0 = lean_value * cos(0.0);
-    float y0 = lean_value * sin(0.0);
+    float x0 = lean_value * cos(0.f);
+    float y0 = lean_value * sin(0.f);
     float x1 = lean_value * cos(2 * XM_PI / 3);
     float y1 = lean_value * sin(2 * XM_PI / 3);
     float x2 = lean_value * cos(4 * XM_PI / 3);

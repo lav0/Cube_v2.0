@@ -9,7 +9,7 @@ struct IEffectWrapper
   virtual void* GetEffect() const = 0;
   virtual void* GetLayout() const = 0;
 
-  virtual void SetWorld(MATRIX4X4_DFN world) = 0;
+  virtual void SetWorld(const MATRIX4X4_DFN& world) = 0;
 };
 
 struct IGeometry

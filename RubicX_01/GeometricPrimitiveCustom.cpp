@@ -26,7 +26,7 @@ std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCub
   assert(corner_rounding_coef >= 0);
   assert(corner_rounding_coef < 1);
   
-  CustomPrimitiveBuilder<VertexPositionNormalTexture> builder(
+  CustomPrimitiveBuilder<VertexPositionNormalTexture, XMVECTOR> builder(
     tessellation, 
     corner_rounding_coef, 
     size, 

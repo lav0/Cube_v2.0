@@ -9,7 +9,7 @@
 #include <memory>
 #include <algorithm>
 
-template <typename VertexType>
+template <typename VertexType, typename VectorType>
 class CustomPrimitiveBuilder
 {
   using Vertices = std::vector<VertexType>;
@@ -24,8 +24,8 @@ public:
     const CubeColorsMap& colors)
     : m_tessellation(tessellation)
     , m_corner_rounding_coef(corner_rounding_coef)
-    , m_edge_rounding_coef(0.4 * corner_rounding_coef)
-    , m_size(0.5 * size)
+    , m_edge_rounding_coef(0.4f * corner_rounding_coef)
+    , m_size(0.5f * size)
     , m_side_to_color_map(colors)
   {
     using namespace CustomPrimitiveCubeInfo;
@@ -51,47 +51,46 @@ public:
     m_indices.reserve(indices_count);
   }
 
-  bool CreateFaces(DirectX::CXMVECTOR centre)
+  bool CreateFaces(const VectorType& centre)
   {
-    using namespace DirectX;
     using namespace CustomPrimitiveCubeInfo;
 
     // Create each face in turn.
     for (int i = 0; i < m_faceCount; i++)
     {
-      XMVECTOR normal = m_faceNormals[i];
+      VectorType normal = m_faceNormals[i];
 
       // Get two vectors perpendicular both to the face normal and to each other.
-      XMVECTOR basis = (i >= 4) ? g_XMIdentityR2 : g_XMIdentityR1;
+      VectorType basis = (i >= 4) ? g_XMIdentityR2 : g_XMIdentityR1;
+      
+      VectorType side1 = DirectX::XMVector3Cross(normal, basis);
+      VectorType side2 = DirectX::XMVector3Cross(normal, side1);
 
-      XMVECTOR side1 = XMVector3Cross(normal, basis);
-      XMVECTOR side2 = XMVector3Cross(normal, side1);
-
-      XMVECTOR side1_main = XMVectorScale(
+      VectorType side1_main = DirectX::XMVectorScale(
         side1, (1 - m_corner_rounding_coef) * (1 - m_edge_rounding_coef));
 
-      XMVECTOR side2_main = XMVectorScale(
+      VectorType side2_main = DirectX::XMVectorScale(
         side2, (1 - m_corner_rounding_coef) * (1 - m_edge_rounding_coef));
 
-      XMVECTOR side1_aux = XMVectorScale(
+      VectorType side1_aux = DirectX::XMVectorScale(
         side1, m_corner_rounding_coef * (1 - m_edge_rounding_coef));
 
-      XMVECTOR side2_aux = XMVectorScale(
+      VectorType side2_aux = DirectX::XMVectorScale(
         side2, m_corner_rounding_coef * (1 - m_edge_rounding_coef));
 
-      XMVECTOR vertex0 = centre + (normal - side1_main - side2_main) * m_size;
-      XMVECTOR vertex1 = centre + (normal - side1_main + side2_main) * m_size;
-      XMVECTOR vertex2 = centre + (normal + side1_main + side2_main) * m_size;
-      XMVECTOR vertex3 = centre + (normal + side1_main - side2_main) * m_size;
+      VectorType vertex0 = centre + (normal - side1_main - side2_main) * m_size;
+      VectorType vertex1 = centre + (normal - side1_main + side2_main) * m_size;
+      VectorType vertex2 = centre + (normal + side1_main + side2_main) * m_size;
+      VectorType vertex3 = centre + (normal + side1_main - side2_main) * m_size;
 
-      XMVECTOR vertex00_aux = vertex0 - side2_aux * m_size;
-      XMVECTOR vertex01_aux = vertex0 - side1_aux * m_size;
-      XMVECTOR vertex10_aux = vertex1 - side1_aux * m_size;
-      XMVECTOR vertex11_aux = vertex1 + side2_aux * m_size;
-      XMVECTOR vertex20_aux = vertex2 + side2_aux * m_size;
-      XMVECTOR vertex21_aux = vertex2 + side1_aux * m_size;
-      XMVECTOR vertex30_aux = vertex3 + side1_aux * m_size;
-      XMVECTOR vertex31_aux = vertex3 - side2_aux * m_size;
+      VectorType vertex00_aux = vertex0 - side2_aux * m_size;
+      VectorType vertex01_aux = vertex0 - side1_aux * m_size;
+      VectorType vertex10_aux = vertex1 - side1_aux * m_size;
+      VectorType vertex11_aux = vertex1 + side2_aux * m_size;
+      VectorType vertex20_aux = vertex2 + side2_aux * m_size;
+      VectorType vertex21_aux = vertex2 + side1_aux * m_size;
+      VectorType vertex30_aux = vertex3 + side1_aux * m_size;
+      VectorType vertex31_aux = vertex3 - side2_aux * m_size;
 
       fillInIndicesContainer(m_indices, m_vertices.size());
 
@@ -125,7 +124,7 @@ public:
     return true;
   }
 
-  bool CreateEdges(DirectX::CXMVECTOR centre)
+  bool CreateEdges(const VectorType& centre)
   {
     using namespace CustomPrimitiveCubeInfo;
 
@@ -145,7 +144,7 @@ public:
     return true;
   }
 
-  bool CreateCorners(DirectX::CXMVECTOR centre)
+  bool CreateCorners(const VectorType& centre)
   {
     using namespace CustomPrimitiveCubeInfo;
 
@@ -187,24 +186,22 @@ public:
 
 private:
 
-  void closeGaps(DirectX::CXMVECTOR centre, 
-                 DirectX::CXMVECTOR face_normal, 
-                 DirectX::CXMVECTOR normal1, 
-                 DirectX::CXMVECTOR texture)
+  void closeGaps(const VectorType& centre, 
+                 const VectorType& face_normal, 
+                 const VectorType& normal1, 
+                 const VectorType& texture)
   {
-    using namespace DirectX;
-
     assert(is_zero_dbl(XMVectorGetX(XMVector3Dot(face_normal, normal1))));
 
-    XMVECTOR axis = XMVector3Normalize(face_normal);
+    VectorType axis = DirectX::XMVector3Normalize(face_normal);
 
-    XMVECTOR start = normal1;
+    VectorType start = normal1;
     auto step = XM_PIDIV2;
     for (float travel = 0.f; travel < XM_2PI - 0.01f; travel += step)
     {
-      XMVECTOR end = XMVector3Rotate(start, XMQuaternionRotationAxis(axis, -step));
+      VectorType end = DirectX::XMVector3Rotate(start, XMQuaternionRotationAxis(axis, -step));
 
-      XMVECTOR point = XMVectorScale(
+      VectorType point = DirectX::XMVectorScale(
         (start + end) * (1 - m_edge_rounding_coef) * (1 - m_corner_rounding_coef) + face_normal,
         m_size
         );
@@ -218,39 +215,37 @@ private:
     }
   }
   
-  void slickEdges(DirectX::CXMVECTOR centre,
-                  DirectX::CXMVECTOR normal1,
-                  DirectX::CXMVECTOR normal2)
+  void slickEdges(const VectorType& centre,
+                  const VectorType& normal1,
+                  const VectorType& normal2)
   {
-    using namespace DirectX;
     using namespace CustomPrimitiveCubeInfo;
 
-    XMVECTOR normal3 = XMVector3Cross(normal1, normal2);
+    VectorType normal3 = DirectX::XMVector3Cross(normal1, normal2);
 
-    XMVECTOR left_point = XMVectorScale(
+    VectorType left_point = DirectX::XMVectorScale(
       normal1 + normal2 - normal3*(1 - m_corner_rounding_coef),
       m_size*(1 - m_edge_rounding_coef)
-      );
-    XMVECTOR right_point = XMVectorScale(
+    );
+    VectorType right_point = DirectX::XMVectorScale(
       normal1 + normal2 + normal3*(1 - m_corner_rounding_coef),
       m_size*(1 - m_edge_rounding_coef)
-      );
+    );
 
     buildQuaterCylinderOnEdge(normal1, normal2, centre + left_point, centre + right_point,
       m_textureCoordinates[0], m_textureCoordinates[1],
       m_size * m_edge_rounding_coef, m_tessellation, m_indices, m_vertices);
   }
   
-  void slickCorners(DirectX::CXMVECTOR centre,
-                    DirectX::CXMVECTOR normal1,
-                    DirectX::CXMVECTOR normal2)
+  void slickCorners(const VectorType& centre,
+                    const VectorType& normal1,
+                    const VectorType& normal2)
   {
-    using namespace DirectX;
     using namespace CustomPrimitiveCubeInfo;
 
-    XMVECTOR normal3 = XMVector3Cross(normal1, normal2);
+    VectorType normal3 = DirectX::XMVector3Cross(normal1, normal2);
 
-    XMVECTOR point = XMVectorScale(
+    VectorType point = DirectX::XMVectorScale(
       (normal1 + normal2)*(1 - m_corner_rounding_coef) + normal3,
       m_size*(1 - m_edge_rounding_coef)
       );
@@ -263,34 +258,32 @@ private:
   }
 
   static void closeGapInCorner(
-    DirectX::CXMVECTOR face_normal,
-    DirectX::CXMVECTOR normal_start,
-    DirectX::CXMVECTOR normal_end,
-    DirectX::CXMVECTOR corner_centre,
-    DirectX::CXMVECTOR texture_coord,
+    const VectorType& face_normal,
+    const VectorType& normal_start,
+    const VectorType& normal_end,
+    const VectorType& corner_centre,
+    const VectorType& texture_coord,
     float corner_radius,
     size_t tessellation,
     std::vector<uint16_t>& indices,
     std::vector<VertexType>& vertices
     )
   {
-    using namespace DirectX;
-
-    XMVECTOR axis = XMVector3Normalize(face_normal);
+    VectorType axis = DirectX::XMVector3Normalize(face_normal);
 
     size_t vbase = vertices.size();
 
-    auto full_angle = XMVectorGetX(
-      XMVector3AngleBetweenNormals(normal_start, normal_end));
+    auto full_angle = DirectX::XMVectorGetX(
+      DirectX::XMVector3AngleBetweenNormals(normal_start, normal_end));
 
     for (size_t i = 0; i <= tessellation; ++i)
     {
       auto angle = i * full_angle / tessellation;
 
-      XMVECTOR rotation = XMQuaternionRotationAxis(axis, angle);
-      XMVECTOR normal = XMVector3Normalize(XMVector3Rotate(normal_start, rotation));
+      VectorType rotation = XMQuaternionRotationAxis(axis, angle);
+      VectorType normal = DirectX::XMVector3Normalize(XMVector3Rotate(normal_start, rotation));
 
-      XMVECTOR point = corner_centre + corner_radius * normal;
+      VectorType point = corner_centre + corner_radius * normal;
 
       vertices.emplace_back(point, axis, texture_coord);
 
@@ -303,33 +296,31 @@ private:
   }
 
   static void buildQuaterCylinderOnEdge(
-    DirectX::CXMVECTOR normal_1,
-    DirectX::CXMVECTOR normal_2,
-    DirectX::CXMVECTOR bottom_centre,
-    DirectX::CXMVECTOR top_centre,
-    const DirectX::CXMVECTOR texture_coord1,
-    const DirectX::CXMVECTOR texture_coord2,
+    const VectorType& normal_1,
+    const VectorType& normal_2,
+    const VectorType& bottom_centre,
+    const VectorType& top_centre,
+    const VectorType& texture_coord1,
+    const VectorType& texture_coord2,
     float radius,
     size_t tessellation,
     std::vector<uint16_t>& indices,
     std::vector<VertexType>& vertices
     )
   {
-    using namespace DirectX;
-
     size_t vbase = vertices.size();
 
-    XMVECTOR axis = XMVector3Normalize(XMVector3Cross(normal_1, normal_2));
+    VectorType axis = DirectX::XMVector3Normalize(XMVector3Cross(normal_1, normal_2));
 
     for (size_t i = 0; i <= tessellation; ++i)
     {
       float angle = i * XM_PIDIV2 / tessellation;
 
-      XMVECTOR rotation = XMQuaternionRotationAxis(axis, angle);
-      XMVECTOR rad_vector = radius * XMVector3Rotate(normal_1, rotation);
+      VectorType rotation = XMQuaternionRotationAxis(axis, angle);
+      VectorType rad_vector = radius * DirectX::XMVector3Rotate(normal_1, rotation);
 
-      XMVECTOR point_bottom = bottom_centre + rad_vector;
-      XMVECTOR point_top = top_centre + rad_vector;
+      VectorType point_bottom = bottom_centre + rad_vector;
+      VectorType point_top = top_centre + rad_vector;
 
       vertices.emplace_back(point_bottom, rad_vector, texture_coord1);
       vertices.emplace_back(point_top, rad_vector, texture_coord2);
@@ -348,10 +339,10 @@ private:
   }
 
   static void buildTorusOnCorner(
-    DirectX::CXMVECTOR normal_start,
-    DirectX::CXMVECTOR normal_end,
-    DirectX::CXMVECTOR torus_centre,
-    DirectX::CXMVECTOR texture_coord,
+    const VectorType& normal_start,
+    const VectorType& normal_end,
+    const VectorType& torus_centre,
+    const VectorType& texture_coord,
     float tube_radius,
     float torus_radius,
     size_t tessellation,
@@ -359,36 +350,34 @@ private:
     std::vector<VertexType>& vertices
     )
   {
-    using namespace DirectX;
-
     size_t vbase = vertices.size();
     size_t stride = tessellation + 1;
 
-    XMVECTOR axis = XMVector3Normalize(XMVector3Cross(normal_start, normal_end));
-    XMVECTOR tangent = XMVector3Rotate(
+    VectorType axis = DirectX::XMVector3Normalize(XMVector3Cross(normal_start, normal_end));
+    VectorType tangent = DirectX::XMVector3Rotate(
       normal_start,
       XMQuaternionRotationAxis(axis, -XM_PIDIV2)
       );
 
-    auto section_angle = XMVectorGetX(
-      XMVector3AngleBetweenNormals(normal_start, normal_end));
+    auto section_angle = DirectX::XMVectorGetX(
+      DirectX::XMVector3AngleBetweenNormals(normal_start, normal_end));
 
     for (size_t i = 0; i <= tessellation; ++i)
     {
       float torus_angle = i * section_angle / tessellation;
 
-      XMVECTOR rotation = XMQuaternionRotationAxis(axis, torus_angle);
-      XMVECTOR torus_normal = XMVector3Normalize(XMVector3Rotate(normal_start, rotation));
-      XMVECTOR torus_axis = XMVector3Normalize(XMVector3Rotate(tangent, rotation));
+      VectorType rotation = XMQuaternionRotationAxis(axis, torus_angle);
+      VectorType torus_normal = DirectX::XMVector3Normalize(XMVector3Rotate(normal_start, rotation));
+      VectorType torus_axis = DirectX::XMVector3Normalize(XMVector3Rotate(tangent, rotation));
 
       for (size_t j = 0; j <= tessellation; ++j)
       {
         float tube_angle = j * XM_PIDIV2 / tessellation;
 
-        XMVECTOR tube_rotation = XMQuaternionRotationAxis(torus_axis, tube_angle);
-        XMVECTOR tube_normal = XMVector3Rotate(torus_normal, tube_rotation);
+        VectorType tube_rotation = XMQuaternionRotationAxis(torus_axis, tube_angle);
+        VectorType tube_normal = DirectX::XMVector3Rotate(torus_normal, tube_rotation);
 
-        XMVECTOR point = torus_centre + torus_radius * torus_normal + tube_radius * tube_normal;
+        VectorType point = torus_centre + torus_radius * torus_normal + tube_radius * tube_normal;
 
         vertices.emplace_back(point, tube_normal, texture_coord);
 
