@@ -2,7 +2,6 @@
 
 #include "SHARED_DEFS.h"
 
-#include "..\DirectXTK\Inc\GeometricPrimitive.h"
 #include "../RubicMath/include/rcbCubeState.h"
 
 #include <map>

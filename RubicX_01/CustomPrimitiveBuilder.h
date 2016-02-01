@@ -2,6 +2,7 @@
 
 
 #include "CustomPrimitiveCubeInfo.h"
+#include "CustomPrimitiveFunctions.h"
 
 #include "../RubicMath/include/rcbVector3D.h"
 
@@ -54,6 +55,7 @@ public:
   bool CreateFaces(const VectorType& centre)
   {
     using namespace CustomPrimitiveCubeInfo;
+    using namespace CustomPrimitiveFunctions;
 
     // Create each face in turn.
     for (int i = 0; i < m_faceCount; i++)
@@ -63,19 +65,19 @@ public:
       // Get two vectors perpendicular both to the face normal and to each other.
       VectorType basis = (i >= 4) ? g_XMIdentityR2 : g_XMIdentityR1;
       
-      VectorType side1 = DirectX::XMVector3Cross(normal, basis);
-      VectorType side2 = DirectX::XMVector3Cross(normal, side1);
+      VectorType side1 = CrossProduct(normal, basis);
+      VectorType side2 = CrossProduct(normal, side1);
 
-      VectorType side1_main = DirectX::XMVectorScale(
+      VectorType side1_main = VectorScale(
         side1, (1 - m_corner_rounding_coef) * (1 - m_edge_rounding_coef));
 
-      VectorType side2_main = DirectX::XMVectorScale(
+      VectorType side2_main = VectorScale(
         side2, (1 - m_corner_rounding_coef) * (1 - m_edge_rounding_coef));
 
-      VectorType side1_aux = DirectX::XMVectorScale(
+      VectorType side1_aux = VectorScale(
         side1, m_corner_rounding_coef * (1 - m_edge_rounding_coef));
 
-      VectorType side2_aux = DirectX::XMVectorScale(
+      VectorType side2_aux = VectorScale(
         side2, m_corner_rounding_coef * (1 - m_edge_rounding_coef));
 
       VectorType vertex0 = centre + (normal - side1_main - side2_main) * m_size;
@@ -191,25 +193,28 @@ private:
                  const VectorType& normal1, 
                  const VectorType& texture)
   {
-    assert(is_zero_dbl(XMVectorGetX(XMVector3Dot(face_normal, normal1))));
+    using namespace CustomPrimitiveFunctions;
 
-    VectorType axis = DirectX::XMVector3Normalize(face_normal);
+    assert(is_zero_dbl(GetX(DotProduct(face_normal, normal1))));
+
+    VectorType axis = Normalize(face_normal);
 
     VectorType start = normal1;
     auto step = XM_PIDIV2;
     for (float travel = 0.f; travel < XM_2PI - 0.01f; travel += step)
     {
-      VectorType end = DirectX::XMVector3Rotate(start, XMQuaternionRotationAxis(axis, -step));
+      VectorType end = RotateWithQuaternion(start, QuaternionRotationAxis(axis, -step));
 
-      VectorType point = DirectX::XMVectorScale(
+      VectorType point = VectorScale(
         (start + end) * (1 - m_edge_rounding_coef) * (1 - m_corner_rounding_coef) + face_normal,
         m_size
-        );
+      );
 
       closeGapInCorner(face_normal, end, start, centre + point, texture,
         m_size * m_corner_rounding_coef * (1 - m_edge_rounding_coef),
         m_tessellation,
-        m_indices, m_vertices);
+        m_indices, m_vertices
+      );
 
       start = end;
     }
@@ -220,14 +225,15 @@ private:
                   const VectorType& normal2)
   {
     using namespace CustomPrimitiveCubeInfo;
+    using namespace CustomPrimitiveFunctions;
 
-    VectorType normal3 = DirectX::XMVector3Cross(normal1, normal2);
+    VectorType normal3 = CrossProduct(normal1, normal2);
 
-    VectorType left_point = DirectX::XMVectorScale(
+    VectorType left_point = VectorScale(
       normal1 + normal2 - normal3*(1 - m_corner_rounding_coef),
       m_size*(1 - m_edge_rounding_coef)
     );
-    VectorType right_point = DirectX::XMVectorScale(
+    VectorType right_point = VectorScale(
       normal1 + normal2 + normal3*(1 - m_corner_rounding_coef),
       m_size*(1 - m_edge_rounding_coef)
     );
@@ -242,10 +248,11 @@ private:
                     const VectorType& normal2)
   {
     using namespace CustomPrimitiveCubeInfo;
+    using namespace CustomPrimitiveFunctions;
 
-    VectorType normal3 = DirectX::XMVector3Cross(normal1, normal2);
+    VectorType normal3 = CrossProduct(normal1, normal2);
 
-    VectorType point = DirectX::XMVectorScale(
+    VectorType point = VectorScale(
       (normal1 + normal2)*(1 - m_corner_rounding_coef) + normal3,
       m_size*(1 - m_edge_rounding_coef)
       );
@@ -269,19 +276,20 @@ private:
     std::vector<VertexType>& vertices
     )
   {
-    VectorType axis = DirectX::XMVector3Normalize(face_normal);
+    using namespace CustomPrimitiveFunctions;
+
+    VectorType axis = Normalize(face_normal);
 
     size_t vbase = vertices.size();
 
-    auto full_angle = DirectX::XMVectorGetX(
-      DirectX::XMVector3AngleBetweenNormals(normal_start, normal_end));
+    auto full_angle = GetX(AngleBetweenNormals(normal_start, normal_end));
 
     for (size_t i = 0; i <= tessellation; ++i)
     {
       auto angle = i * full_angle / tessellation;
 
-      VectorType rotation = XMQuaternionRotationAxis(axis, angle);
-      VectorType normal = DirectX::XMVector3Normalize(XMVector3Rotate(normal_start, rotation));
+      VectorType rotation = QuaternionRotationAxis(axis, angle);
+      VectorType normal = Normalize(RotateWithQuaternion(normal_start, rotation));
 
       VectorType point = corner_centre + corner_radius * normal;
 
@@ -308,16 +316,18 @@ private:
     std::vector<VertexType>& vertices
     )
   {
+    using namespace CustomPrimitiveFunctions;
+
     size_t vbase = vertices.size();
 
-    VectorType axis = DirectX::XMVector3Normalize(XMVector3Cross(normal_1, normal_2));
+    VectorType axis = Normalize(CrossProduct(normal_1, normal_2));
 
     for (size_t i = 0; i <= tessellation; ++i)
     {
       float angle = i * XM_PIDIV2 / tessellation;
 
-      VectorType rotation = XMQuaternionRotationAxis(axis, angle);
-      VectorType rad_vector = radius * DirectX::XMVector3Rotate(normal_1, rotation);
+      VectorType rotation = QuaternionRotationAxis(axis, angle);
+      VectorType rad_vector = radius * RotateWithQuaternion(normal_1, rotation);
 
       VectorType point_bottom = bottom_centre + rad_vector;
       VectorType point_top = top_centre + rad_vector;
@@ -350,32 +360,33 @@ private:
     std::vector<VertexType>& vertices
     )
   {
+    using namespace CustomPrimitiveFunctions;
+
     size_t vbase = vertices.size();
     size_t stride = tessellation + 1;
 
-    VectorType axis = DirectX::XMVector3Normalize(XMVector3Cross(normal_start, normal_end));
-    VectorType tangent = DirectX::XMVector3Rotate(
+    VectorType axis = Normalize(CrossProduct(normal_start, normal_end));
+    VectorType tangent = RotateWithQuaternion(
       normal_start,
-      XMQuaternionRotationAxis(axis, -XM_PIDIV2)
-      );
+      QuaternionRotationAxis(axis, -XM_PIDIV2)
+    );
 
-    auto section_angle = DirectX::XMVectorGetX(
-      DirectX::XMVector3AngleBetweenNormals(normal_start, normal_end));
+    auto section_angle = GetX(AngleBetweenNormals(normal_start, normal_end));
 
     for (size_t i = 0; i <= tessellation; ++i)
     {
       float torus_angle = i * section_angle / tessellation;
 
-      VectorType rotation = XMQuaternionRotationAxis(axis, torus_angle);
-      VectorType torus_normal = DirectX::XMVector3Normalize(XMVector3Rotate(normal_start, rotation));
-      VectorType torus_axis = DirectX::XMVector3Normalize(XMVector3Rotate(tangent, rotation));
+      VectorType rotation = QuaternionRotationAxis(axis, torus_angle);
+      VectorType torus_normal = Normalize(RotateWithQuaternion(normal_start, rotation));
+      VectorType torus_axis = Normalize(RotateWithQuaternion(tangent, rotation));
 
       for (size_t j = 0; j <= tessellation; ++j)
       {
         float tube_angle = j * XM_PIDIV2 / tessellation;
 
-        VectorType tube_rotation = XMQuaternionRotationAxis(torus_axis, tube_angle);
-        VectorType tube_normal = DirectX::XMVector3Rotate(torus_normal, tube_rotation);
+        VectorType tube_rotation = QuaternionRotationAxis(torus_axis, tube_angle);
+        VectorType tube_normal = RotateWithQuaternion(torus_normal, tube_rotation);
 
         VectorType point = torus_centre + torus_radius * torus_normal + tube_radius * tube_normal;
 

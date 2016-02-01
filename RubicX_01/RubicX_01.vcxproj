@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="CustomPrimitiveBuilder.h" />
     <ClInclude Include="CustomPrimitiveCubeInfo.h" />
+    <ClInclude Include="CustomPrimitiveFunctions.h" />
     <ClInclude Include="DirectCore.h" />
     <ClInclude Include="DirectCubeFactory.h" />
     <ClInclude Include="DirectCubeManager.h" />
@@ -109,6 +110,7 @@
     <ClCompile Include="DirectCore.cpp" />
     <ClCompile Include="DirectCubeFactory.cpp" />
     <ClCompile Include="DirectCubeManager.cpp" />
+    <ClCompile Include="DirectCustomPrimitiveFunctions.cpp" />
     <ClCompile Include="DirectEffectWrapper.cpp" />
     <ClCompile Include="DirectFactory.cpp" />
     <ClCompile Include="DirectGeometry.cpp" />
