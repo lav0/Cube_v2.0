@@ -16,4 +16,5 @@ namespace CustomPrimitiveFunctions
   float GetX(const CALC_VECTOR4_DFN v);
   float GetY(const CALC_VECTOR4_DFN v);
   float GetZ(const CALC_VECTOR4_DFN v);
+  float GetW(const CALC_VECTOR4_DFN v);
 }

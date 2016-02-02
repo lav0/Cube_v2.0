@@ -52,3 +52,7 @@ float CustomPrimitiveFunctions::GetZ(const CALC_VECTOR4_DFN v)
 {
   return XMVectorGetZ(v);
 }
+float CustomPrimitiveFunctions::GetW(const CALC_VECTOR4_DFN v)
+{
+  return XMVectorGetW(v);
+}
