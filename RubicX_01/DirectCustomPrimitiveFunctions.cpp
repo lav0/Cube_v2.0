@@ -37,6 +37,19 @@ XMVECTOR CustomPrimitiveFunctions::RotateWithQuaternion(const XMVECTOR& v, const
 
 XMVECTOR CustomPrimitiveFunctions::AngleBetweenNormals(const XMVECTOR& v1, const XMVECTOR& v2)
 {
+#ifdef _DEBUG
+
+  auto SMALL_NUM = 0.0001f;
+
+  auto x1 = GetX(v1);   auto x2 = GetX(v2);
+  auto y1 = GetY(v1);   auto y2 = GetY(v2);
+  auto z1 = GetZ(v1);   auto z2 = GetZ(v2);
+
+  assert(fabs(x1*x1 + y1*y1 + z1*z1 - 1) < SMALL_NUM);
+  assert(fabs(x2*x2 + y2*y2 + z2*z2 - 1) < SMALL_NUM);
+
+#endif
+
   return XMVector3AngleBetweenNormals(v1, v2);
 }
 

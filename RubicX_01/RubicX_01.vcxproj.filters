@@ -48,9 +48,6 @@
     <ClInclude Include="IKeyboardListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeometricPrimitiveCustom.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TimeMeasureDecorator.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
@@ -84,6 +81,9 @@
     <ClInclude Include="CustomPrimitiveFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DirectCustomPrimitiveGeometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -110,9 +110,6 @@
     <ClCompile Include="DirectCubeManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeometricPrimitiveCustom.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RubicsCubeBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -129,6 +126,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DirectCustomPrimitiveFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectCustomPrimitiveGeometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

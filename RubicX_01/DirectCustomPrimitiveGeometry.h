@@ -7,7 +7,7 @@
 #include "..\DirectXTK\Inc\Effects.h"
 #include "CustomPrimitiveBuilder.h"
 
-class GeometricPrimitiveCustom : public DirectX::GeometricPrimitive
+class DirectCustomPrimitiveGeometry : public DirectX::GeometricPrimitive
 {
 public:
     

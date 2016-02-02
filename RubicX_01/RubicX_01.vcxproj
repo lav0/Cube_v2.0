@@ -94,7 +94,7 @@
     <ClInclude Include="DirectGeometry.h" />
     <ClInclude Include="DirectRubicsCube.h" />
     <ClInclude Include="DirectSingleCube.h" />
-    <ClInclude Include="GeometricPrimitiveCustom.h" />
+    <ClInclude Include="DirectCustomPrimitiveGeometry.h" />
     <ClInclude Include="IFactory.h" />
     <ClInclude Include="IGeometry.h" />
     <ClInclude Include="IKeyboardListener.h" />
@@ -116,7 +116,7 @@
     <ClCompile Include="DirectGeometry.cpp" />
     <ClCompile Include="DirectRubicsCube.cpp" />
     <ClCompile Include="DirectSingleCube.cpp" />
-    <ClCompile Include="GeometricPrimitiveCustom.cpp" />
+    <ClCompile Include="DirectCustomPrimitiveGeometry.cpp" />
     <ClCompile Include="MouseHandler.cpp" />
     <ClCompile Include="RubicsCubeBuilder.cpp" />
     <ClCompile Include="RubicX_01.cpp" />

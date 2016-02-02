@@ -5,6 +5,8 @@
 #include "DirectGeometry.h"
 #include "IFactory.h"
 
+//#include "../RubicMath/include/rcbQuaternion.h"
+
 #include <directxmath.h>
 #include <memory>
 
@@ -55,6 +57,8 @@ private:
   std::unique_ptr<IEffectWrapper> m_effect_wrapper;
 
   DirectX::XMFLOAT3X3 m_rotation;
+
+  //rcbQuaternion m_quat_rotation;
   
   rcbCubePosition     m_place;
 };

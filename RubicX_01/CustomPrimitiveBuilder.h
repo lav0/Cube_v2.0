@@ -4,8 +4,6 @@
 #include "CustomPrimitiveCubeInfo.h"
 #include "CustomPrimitiveFunctions.h"
 
-#include "../RubicMath/include/rcbVector3D.h"
-
 #include <vector>
 #include <memory>
 #include <algorithm>

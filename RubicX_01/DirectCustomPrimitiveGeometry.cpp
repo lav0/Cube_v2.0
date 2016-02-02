@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "GeometricPrimitiveCustom.h"
+#include "DirectCustomPrimitiveGeometry.h"
 
 #include "../RubicMath/include/rcbVector3D.h"
 
@@ -13,7 +13,7 @@ using namespace DirectX;
 //=============================================================================
 //
 //=============================================================================
-std::unique_ptr<DirectX::GeometricPrimitive> GeometricPrimitiveCustom::CreateCubeAt(
+std::unique_ptr<DirectX::GeometricPrimitive> DirectCustomPrimitiveGeometry::CreateCubeAt(
   _In_ ID3D11DeviceContext* deviceContext, 
   CXMVECTOR                 centre, 
   float                     size, 

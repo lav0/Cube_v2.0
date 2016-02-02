@@ -19,7 +19,7 @@ std::unique_ptr<IGeometry> DirectFactory::CreateCubeGeometryAt(
   size_t                     tessellation
   )
 {
-  auto drx_primitive = GeometricPrimitiveCustom::CreateCubeAt(
+  auto drx_primitive = DirectCustomPrimitiveGeometry::CreateCubeAt(
     m_context,
     XMLoadFloat3(&origin),
     size,
