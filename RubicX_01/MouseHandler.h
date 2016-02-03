@@ -16,22 +16,26 @@ class MouseHandler
 public:
 
   MouseHandler(
-    DirectX::CXMMATRIX a_view,
-    DirectX::CXMMATRIX a_proj,
-    float a_eye_to_screen, 
-    DirectX::CXMVECTOR a_centre, 
-    float a_radius
+    const rcbVector3D& centre,
+    const rcbVector3D& eye_direction,
+    const rcbVector3D& eye_up_of_view,
+    float eye_to_centre,
+    float eye_to_screen,
+    float a_radius,
+    float proj0, float proj1
   );
 
   void Listen(bool a_pressed, float a_x, float a_y);
 
-  DirectX::XMMATRIX Transformation() const;
+  rcbQuaternion Transformation() const;
   
   bool rotationStartIsZero() const;
 
 private:
 
-  bool findPointOnSphere(float a_x, float a_y, DirectX::XMFLOAT3& a_output) const;
+  bool findPointOnSphere(float a_x,
+                         float a_y, 
+                         rcbVector3D& a_output) const;
   
 private:
   
@@ -44,7 +48,7 @@ private:
   rcbVector3D       m_vc_eye;
   rcbPlaneForScreen m_screen_plane;
     
-  Vector3           m_rotation_start;
-  Vector3           m_rotation_axis;
+  rcbVector3D       m_rotation_start;
+  rcbVector3D       m_rotation_axis;
   float             m_angle;
 };

@@ -8,35 +8,23 @@ using namespace DirectX;
 //
 //
 // remove later!
-#include "DirectFactory.h"
 
 
 
 //=============================================================================
 DirectCubeFactory::DirectCubeFactory(
-  ID3D11DeviceContext* a_deviceContext,
+  std::unique_ptr<IFactory>&& geometry_factory,
   Dimention a_dimention,
   size_t a_tessellation,
   DirectX::CXMMATRIX view,
   DirectX::CXMMATRIX projection
 )
-: m_deviceContext(a_deviceContext)
-, m_texture(nullptr)
+: m_geometry_factory(std::move(geometry_factory))
 , m_dimention(a_dimention)
 , m_tessellation(a_tessellation)
 {
   XMStoreFloat4x4(&m_view, view);
   XMStoreFloat4x4(&m_projection, projection);
-
-  createTexture();
-
-  m_geometry_factory = std::make_unique<DirectFactory>(a_deviceContext, m_texture);
-}
-
-//=============================================================================
-DirectCubeFactory::~DirectCubeFactory()
-{
-  if (m_texture) m_texture->Release();
 }
 
 //=============================================================================
@@ -67,26 +55,6 @@ std::unique_ptr<DirectSingleCube> DirectCubeFactory::CreateCube(
     place
   );
 }
-
-//=============================================================================
-bool DirectCubeFactory::createTexture()
-{
-  ID3D11Device* device;
-  m_deviceContext->GetDevice(&device);
-
-  HRESULT hr(S_OK);
-
-  // Load the Texture
-  hr = DirectX::CreateDDSTextureFromFile(
-    device,
-    L"TextureGreen.dds",
-    nullptr,
-    &m_texture
-  );
-
-  return SUCCEEDED(hr);
-}
-
 
 //=============================================================================
 const CubeColorsMap DirectCubeFactory::defaultColors()

@@ -5,47 +5,24 @@
 using namespace DirectX;
 
 //=============================================================================
-rcbVector3D convertToRCB(CXMVECTOR vector)
-{
-  return rcbVector3D(
-    XMVectorGetX(vector),
-    XMVectorGetY(vector),
-    XMVectorGetZ(vector)
-  );
-}
-
-rcbUnitVector3D eyeDirectionOfView(CXMMATRIX view)
-{
-  return convertToRCB(view.r[2]);
-}
-
-rcbUnitVector3D eyeUpOfView(CXMMATRIX view)
-{
-  return convertToRCB(view.r[1]);
-}
-
-float eyeToCentre(CXMMATRIX view)
-{
-  return XMVectorGetZ(view.r[3]);
-}
-
-//=============================================================================
 //
 //=============================================================================
 MouseHandler::MouseHandler(
-  CXMMATRIX a_view, 
-  CXMMATRIX a_proj,
-  float a_eye_to_screen,
-  CXMVECTOR a_centre, 
-  float a_radius
+  const rcbVector3D& centre,
+  const rcbVector3D& eye_direction,
+  const rcbVector3D& eye_up_of_view,
+  float eye_to_centre,
+  float eye_to_screen,
+  float a_radius,
+  float proj0, float proj1
 )
-  : m_eye_to_screen_distance(a_eye_to_screen)
-  , m_sphere(convertToRCB(a_centre), a_radius)
-  , m_vc_eye(rcbVector3D(0,0,0) - eyeToCentre(a_view)*eyeDirectionOfView(a_view))
+: m_eye_to_screen_distance(eye_to_screen)
+, m_sphere(centre, a_radius)
+, m_vc_eye(rcbVector3D(0, 0, 0) - eye_to_centre*eye_direction)
   , m_screen_plane(
-      eyeDirectionOfView(a_view), 
-      -1 * eyeUpOfView(a_view), 
-      m_vc_eye + a_eye_to_screen*eyeDirectionOfView(a_view)
+  eye_direction,
+  -1 * eye_up_of_view,
+  m_vc_eye + eye_to_screen*eye_direction
     )
   , m_rotation_start(0.f, 0.f, 0.f)
   , m_rotation_axis(0.f, 0.f, 0.f)
@@ -54,8 +31,8 @@ MouseHandler::MouseHandler(
 //
 //
 {
-  auto proj_11 = XMVectorGetX(a_proj.r[0]);
-  auto proj_22 = XMVectorGetY(a_proj.r[1]);
+  auto proj_11 = proj0;
+  auto proj_22 = proj1;
   
   if (is_zero_dbl(proj_11)) {
     assert(false);
@@ -77,7 +54,7 @@ void MouseHandler::Listen(bool a_pressed, float a_x, float a_y)
 // 
 //
 {
-  Vector3 point;
+  rcbVector3D point;
 
   if (
     a_pressed && 
@@ -86,34 +63,37 @@ void MouseHandler::Listen(bool a_pressed, float a_x, float a_y)
   {
     if (!rotationStartIsZero()) 
     {      
-      auto xvc0 = XMLoadFloat3(&m_rotation_start);
-      auto xvc1 = XMLoadFloat3(&point);
+      auto& xvc0 = m_rotation_start;
+      auto& xvc1 = point;
 
-      m_rotation_axis = XMVector3Normalize(XMVector3Cross(xvc0, xvc1));
-      m_angle = XMVectorGetX(XMVector3AngleBetweenVectors(xvc0, xvc1));
+      m_rotation_axis = xvc0.vector_mul(xvc1);
+      if (!m_rotation_axis.is_zero_vector())
+        m_rotation_axis.normalize();
+
+      m_angle = xvc0 ^ xvc1;
     }
 
     m_rotation_start = point;
   }
   else 
   {    
-    m_rotation_start = Vector3(0.f, 0.f, 0.f);
+    m_rotation_start = rcbVector3D(0.f, 0.f, 0.f);
 
     m_angle = 0.0005f;
   }
 }
 
 //=============================================================================
-XMMATRIX MouseHandler::Transformation() const
+rcbQuaternion MouseHandler::Transformation() const
 //
 //
 //
 {
-  XMMATRIX result = XMMatrixIdentity();
+  rcbQuaternion result(Rotation(rcbUnitVector3D::ort_z(), 0.f));
 
-  if (is_zero_dbl(m_rotation_axis.LengthSquared() - 1))
+  if (is_zero_dbl(m_rotation_axis.square_norm() - 1))
   {
-    result = XMMatrixRotationAxis(m_rotation_axis, m_angle);
+    result = rcbQuaternion(Rotation(m_rotation_axis, m_angle));
   }
 
   return result;
@@ -123,7 +103,7 @@ XMMATRIX MouseHandler::Transformation() const
 bool MouseHandler::findPointOnSphere(
   float a_x, 
   float a_y, 
-  XMFLOAT3& a_output
+  rcbVector3D& a_output
 ) const
 //
 //
@@ -135,9 +115,7 @@ bool MouseHandler::findPointOnSphere(
   
   if (m_sphere.intersection(line, vc_world))
   {
-    a_output.x = static_cast<float>(vc_world.getX());
-    a_output.y = static_cast<float>(vc_world.getY());
-    a_output.z = static_cast<float>(vc_world.getZ());
+    a_output = vc_world;
 
     return true;
   } 
@@ -151,7 +129,7 @@ bool MouseHandler::rotationStartIsZero() const
 //
 //
 {
-  return m_rotation_start.LengthSquared() < 0.001;
+  return m_rotation_start.square_norm() < 0.001;
 }
 
 //=============================================================================

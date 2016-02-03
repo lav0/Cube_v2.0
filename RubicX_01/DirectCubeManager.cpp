@@ -5,6 +5,7 @@
 #include <directxmath.h>
 
 #include "..\DirectXTK\Inc\VertexTypes.h"
+#include "DirectFactory.h"
 
 #include "RubicsCubeBuilder.h"
 #include "TimeMeasureDecorator.h"
@@ -13,7 +14,34 @@
 #define DirectCubeFactory TimeMeasureDirectCubeFactoryDecorator
 #endif
 
+//=============================================================================
+rcbVector3D convertToRCB(CXMVECTOR vector)
+{
+  return rcbVector3D(
+    XMVectorGetX(vector),
+    XMVectorGetY(vector),
+    XMVectorGetZ(vector)
+    );
+}
 
+rcbUnitVector3D eyeDirectionOfView(CXMMATRIX view)
+{
+  return convertToRCB(view.r[2]);
+}
+
+rcbUnitVector3D eyeUpOfView(CXMMATRIX view)
+{
+  return convertToRCB(view.r[1]);
+}
+
+float eyeToCentre(CXMMATRIX view)
+{
+  return XMVectorGetZ(view.r[3]);
+}
+
+
+//=============================================================================
+//
 //=============================================================================
 DirectCubeManager::DirectCubeManager()
   : m_xvc_eye(initialEyePosition())
@@ -45,8 +73,17 @@ HRESULT DirectCubeManager::Initialize( ID3D11DeviceContext* a_context,
   
   setUpMouseHandler();
 
+  auto texture_holder = std::make_unique<DirectTextureHolder>(a_context);
+
+  auto geometry_factory = std::make_unique<DirectFactory>(
+    a_context, texture_holder->GetTexture());
+
   auto factory = std::make_unique<DirectCubeFactory>(
-    a_context, a_cube_dimention, a_tesselation, m_xmx_view, m_xmx_projection
+    std::move(geometry_factory),
+    a_cube_dimention, 
+    a_tesselation, 
+    m_xmx_view, 
+    m_xmx_projection
   );
 
   RubicsCubeBuilder builder(a_cube_dimention, std::move(factory));
@@ -101,12 +138,20 @@ void DirectCubeManager::setUpCamera()
 //=============================================================================
 void DirectCubeManager::setUpMouseHandler()
 {
+  auto centre = rcbVector3D(0.f, 0.f, 0.f);
+  auto eye_to_centre = eyeToCentre(m_xmx_view);
+  auto eye_direction = eyeDirectionOfView(m_xmx_view);
+  auto eye_up_of_view = eyeUpOfView(m_xmx_view);
+
   m_mouse_handler.reset(new MouseHandler(
-    m_xmx_view, 
-    m_xmx_projection,
+    centre,
+    eye_direction,
+    eye_up_of_view,
+    eye_to_centre,
     1.f, 
-    DirectX::XMVectorZero(), 
-    m_cube->OuterSphereRadius()
+    m_cube->OuterSphereRadius(),
+    XMVectorGetX(m_xmx_projection.r[0]),
+    XMVectorGetY(m_xmx_projection.r[1])
   ));
 }
 
@@ -124,12 +169,12 @@ void DirectCubeManager::Render()
 {
   tick();
 
-  XMMATRIX localTransfrom = m_mouse_handler->Transformation();
+  //auto localTransfrom = m_mouse_handler->Transformation();
   
-  XMVECTOR xvc_quat_rotate = XMQuaternionRotationMatrix(localTransfrom);
+  auto quat_rotate = m_mouse_handler->Transformation();
   
   m_cube->Update(m_time_lapsed);
-  m_cube->Rotate(xvc_quat_rotate);
+  m_cube->Rotate(quat_rotate);
   
   if (!m_cube->IsTurning() && !m_commands_sequence.empty())
   {

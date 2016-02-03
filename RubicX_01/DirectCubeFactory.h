@@ -13,14 +13,12 @@ class DirectCubeFactory
 public:
 
   DirectCubeFactory(
-    ID3D11DeviceContext* deviceContext,
+    std::unique_ptr<IFactory>&& geometry_factory,
     Dimention a_dimention,
     size_t a_tessellation,
     DirectX::CXMMATRIX view,
     DirectX::CXMMATRIX projection
   );
-
-  virtual ~DirectCubeFactory();
 
   virtual std::unique_ptr<DirectSingleCube> CreateCube(
     const DirectX::XMFLOAT3&        origin, 
@@ -34,15 +32,10 @@ private:
 
   static const CubeColorsMap defaultColors();
   const CubeColorsMap customColors(const std::array<Dimention,3>& cubeIndeces) const;
-
-  bool createTexture();
-  
+    
 private:
 
   std::unique_ptr<IFactory> m_geometry_factory;
-
-  ID3D11DeviceContext*      m_deviceContext;
-  ID3D11ShaderResourceView* m_texture;
 
   const Dimention           m_dimention;
   size_t                    m_tessellation;

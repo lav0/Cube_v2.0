@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 
+#include "DirectTextureHolder.h"
 #include "DirectRubicsCube.h"
 #include "MouseHandler.h"
 #include "IKeyboardListener.h"

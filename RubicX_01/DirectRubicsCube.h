@@ -27,7 +27,7 @@ public:
 
   virtual ~DirectRubicsCube() {}
 
-  void Rotate(DirectX::CXMVECTOR a_quaternion);
+  void Rotate(const rcbQuaternion& a_quaternion);
 
   void TurnFace(const TurnCommand&);
 

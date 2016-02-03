@@ -7,7 +7,7 @@ using namespace DirectX;
 
 const float DirectRubicsCube::bigcubeSize  = 4.f;
 const float DirectRubicsCube::clearance    = 0.16f;
-const float DirectRubicsCube::turningSpeed = 3.f;
+const float DirectRubicsCube::turningSpeed = 4.2f;
 
 const rcbQuaternion staticQuaternion(Rotation(rcbUnitVector3D::ort_z(), 0.0));
 
@@ -39,14 +39,9 @@ void DirectRubicsCube::alignSubcubes()
 }
 
 //=============================================================================
-void DirectRubicsCube::Rotate(CXMVECTOR a_quaternion)
+void DirectRubicsCube::Rotate(const rcbQuaternion& a_quaternion)
 {
-  rcbQuaternion quat_arg(
-    XMVectorGetW(a_quaternion),
-    XMVectorGetX(a_quaternion),
-    XMVectorGetY(a_quaternion),
-    XMVectorGetZ(a_quaternion)
-  );
+  rcbQuaternion quat_arg(a_quaternion);
 
   m_quat_position = quat_arg * m_quat_position;
 
