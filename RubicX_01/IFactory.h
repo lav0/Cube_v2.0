@@ -8,7 +8,7 @@ struct IFactory
   virtual ~IFactory() {}
 
   virtual std::unique_ptr<IGeometry> CreateCubeGeometryAt(
-    STORE_VECTOR3_DFN          origin,
+    STORE_VECTOR3_DFN    origin,
     const CubeColorsMap& colors,
     float                size,
     size_t               tessellation

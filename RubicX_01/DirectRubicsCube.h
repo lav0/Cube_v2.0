@@ -3,6 +3,7 @@
 #include "stdafx.h"
 
 #include <vector>
+#include <array>
 #include <memory>
 #include <algorithm>
 
@@ -58,15 +59,24 @@ private:
 
   void fillTurningCubesContrainer();
 
-  float deltaTurningAngle(float a_time_lapsed) const;
-
+  float turningContinuousAngle(float a_time_lapsed) const;
+  float turningStepAngle() const;
+  
 private:
 
   std::vector<std::shared_ptr<DirectSingleCube>> m_subcubes;
 
-  DirectX::XMFLOAT3X3 m_position;
+  rcbQuaternion m_quat_position;
+
+  std::array<rcbUnitVector3D, 3> m_cube_orts;
 
   const Dimention m_dimention;
+
+  /////////////////////////////////////////////////////////////////////////////
+  //    Face turning processing members
+  /////////////////////////////////////////////////////////////////////////////
+
+  rcbQuaternion m_quat_rotation_during_turning;
 
   TurnCommand m_cur_turning_command;
   size_t      m_turning_axis_index = 0;

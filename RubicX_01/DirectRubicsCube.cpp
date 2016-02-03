@@ -9,47 +9,63 @@ const float DirectRubicsCube::bigcubeSize  = 4.f;
 const float DirectRubicsCube::clearance    = 0.16f;
 const float DirectRubicsCube::turningSpeed = 3.f;
 
+const rcbQuaternion staticQuaternion(Rotation(rcbUnitVector3D::ort_z(), 0.0));
+
 //=============================================================================
 DirectRubicsCube::DirectRubicsCube(
   Dimention a_dimention,
   std::vector<std::shared_ptr<DirectSingleCube>> single_cubes
  )
  : m_subcubes(std::move(single_cubes))
- , m_position(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f)
+ , m_quat_position(staticQuaternion)
+ , m_cube_orts{{ 
+    rcbUnitVector3D::ort_x(), 
+    rcbUnitVector3D::ort_y(), 
+    rcbUnitVector3D::ort_z()
+  }}
  , m_dimention(a_dimention)
-{
+ , m_quat_rotation_during_turning(staticQuaternion)
+{  
   m_turning_cubes.clear();
 }
 
 //=============================================================================
 void DirectRubicsCube::alignSubcubes()
 { 
-  XMMATRIX pos = XMLoadFloat3x3(&m_position);
-
-  std::for_each(m_turning_cubes.begin(), m_turning_cubes.end(), 
-    [&pos](std::shared_ptr<DirectSingleCube> cube)
-    {
-      cube->Align(pos);
-    }
-  );
+  for (auto& subcube : m_turning_cubes)
+  {
+    subcube->EndTurn(m_quat_rotation_during_turning);
+  }
 }
 
 //=============================================================================
 void DirectRubicsCube::Rotate(CXMVECTOR a_quaternion)
 {
-  XMMATRIX position = XMLoadFloat3x3(&m_position);
-  XMMATRIX rotation = XMMatrixRotationQuaternion(a_quaternion);
+  rcbQuaternion quat_arg(
+    XMVectorGetW(a_quaternion),
+    XMVectorGetX(a_quaternion),
+    XMVectorGetY(a_quaternion),
+    XMVectorGetZ(a_quaternion)
+  );
 
-  position = position * rotation;
+  m_quat_position = quat_arg * m_quat_position;
 
-  XMStoreFloat3x3(&m_position, position);
+  for (auto& v : m_cube_orts)
+  {
+    v = quat_arg.turn(v);
+  }
 
   std::for_each(m_subcubes.begin(), m_subcubes.end(), 
-    [&a_quaternion](std::shared_ptr<DirectSingleCube> cube)
+    [&quat_arg](std::shared_ptr<DirectSingleCube> cube)
     {
-      cube->Rotate(a_quaternion);
+      cube->Rotate(quat_arg);
     }
   );
+
+  if (m_b_turning)
+  {
+    m_quat_rotation_during_turning = quat_arg * m_quat_rotation_during_turning;
+  }
 }
 
 //=============================================================================
@@ -92,24 +108,28 @@ void DirectRubicsCube::beginTurning()
   
   _ASSERT(m_cur_turning_command.face < m_dimention);
   
-  eTurnAxis& axis  = m_cur_turning_command.axis;
-  eAngle&    angle = m_cur_turning_command.angle;
+  eTurnAxis& e_axis  = m_cur_turning_command.axis;
+  eAngle&    e_angle = m_cur_turning_command.angle;
 
-  m_turning_axis_index = axis == TA_X ? 0 : 
-                        (axis == TA_Y ? 1 : 2);
+  m_turning_axis_index = e_axis == TA_X ? 0 :
+                        (e_axis == TA_Y ? 1 : 2);
 
   m_face_number        = m_cur_turning_command.face;
-  m_aim_turning_angle  = rcb_to_float(angle);
-  m_turning_direction  = angle == A_270 ? -1 : 1;
+  m_aim_turning_angle = rcb_to_float(e_angle);
+  m_turning_direction = e_angle == A_270 ? -1 : 1;
 
   fillTurningCubesContrainer();
-  
-  std::for_each(m_turning_cubes.begin(), m_turning_cubes.end(),
-    [&axis, &angle](std::shared_ptr<DirectSingleCube>& subcube)
-    {
-      subcube->Turn(axis, angle);
-    }
+
+  float delta = turningStepAngle();
+  auto axis = m_cube_orts[m_turning_axis_index];
+  rcbQuaternion quat_turn(
+    Rotation(axis, delta)
   );
+
+  for (auto& subcube : m_turning_cubes)
+  {
+    subcube->Turn(e_axis, e_angle, quat_turn);
+  }
 
   m_b_turning = true;  
 }
@@ -122,17 +142,17 @@ void DirectRubicsCube::processTurning(float a_time_lapsed)
 {
   _ASSERT(m_turning_axis_index >= 0 && m_turning_axis_index <= 2);
 
-  float delta = deltaTurningAngle(a_time_lapsed);
+  auto delta = turningContinuousAngle(a_time_lapsed);
+  auto axis = m_cube_orts[m_turning_axis_index];
 
-  XMVECTOR quaternion = XMQuaternionRotationAxis(
-    XMLoadFloat3x3(&m_position).r[m_turning_axis_index], 
-    delta
+  rcbQuaternion quat_arg(
+    Rotation(axis, delta)
   );
   
   std::for_each(m_turning_cubes.begin(), m_turning_cubes.end(),
-    [&quaternion](std::shared_ptr<DirectSingleCube>& subcube)
+    [&quat_arg](std::shared_ptr<DirectSingleCube>& subcube)
     {
-      subcube->Rotate(quaternion);
+      subcube->Rotate(quat_arg);
     }
   );
 
@@ -150,6 +170,9 @@ void DirectRubicsCube::endTurning()
   m_turning_cubes.clear();
   
   m_cur_turning_angle = 0.f;
+  m_turning_direction = 0;
+
+  m_quat_rotation_during_turning = staticQuaternion;
 
   m_b_turning = false;
 }
@@ -223,8 +246,14 @@ const Dimention DirectRubicsCube::GetDimention() const
 }
 
 //=============================================================================
-float DirectRubicsCube::deltaTurningAngle(float a_time_lapsed) const
+float DirectRubicsCube::turningContinuousAngle(float a_time_lapsed) const
 {
   return m_turning_direction * turningSpeed * a_time_lapsed;
+}
+
+//=============================================================================
+float DirectRubicsCube::turningStepAngle() const
+{
+  return m_turning_direction * m_aim_turning_angle; // expect M_PI_2
 }
 //=============================================================================

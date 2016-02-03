@@ -29,6 +29,22 @@ static void CreateInputLayout(
   //SetDebugObjectName(*pInputLayout, "DirectXTK:GeometricPrimitive");
 }
 
+XMMATRIX to_drx_matrix(const rcbQuaternion& q)
+{
+  auto x = static_cast<float>(q.vect_part().getX());
+  auto y = static_cast<float>(q.vect_part().getY());
+  auto z = static_cast<float>(q.vect_part().getZ());
+  auto w = static_cast<float>(q.scal_part());
+
+  XMMATRIX by_quat = {
+    1 - 2 * y*y - 2 * z*z, 2 * x*y + 2 * w * z, 2 * x*z - 2 * w*y, 0.f,
+    2 * x*y - 2 * w*z, 1 - 2 * x*x - 2 * z*z, 2 * y*z + 2 * w*x, 0.f,
+    2 * x*z + 2 * w*y, 2 * y*z - 2 * w*x, 1 - 2 * x*x - 2 * y*y, 0.f,
+    0.f, 0.f, 0.f, 1.f
+  };
+
+  return by_quat;
+}
 
 //=============================================================================
 DirectEffectWrapper::DirectEffectWrapper(
@@ -70,6 +86,12 @@ void* DirectEffectWrapper::GetLayout() const
 void DirectEffectWrapper::SetWorld(DirectX::CXMMATRIX world)
 {
   m_effect->SetWorld(world);
+}
+
+//=============================================================================
+void DirectEffectWrapper::SetRotation(const rcbQuaternion& quaternion)
+{
+  SetWorld(to_drx_matrix(quaternion));
 }
 
 //=============================================================================

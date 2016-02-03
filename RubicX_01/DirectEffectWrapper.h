@@ -21,7 +21,8 @@ public:
   void* GetEffect() const override;
   void* GetLayout() const override;
 
-  void SetWorld(DirectX::CXMMATRIX world) override;
+  void SetWorld(const DirectX::XMMATRIX& world) override;
+  void SetRotation(const rcbQuaternion& quaternion) override;
   
 private:
 
