@@ -30,19 +30,7 @@
     <ClInclude Include="DirectCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DirectCubeFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectSingleCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectRubicsCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MouseHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectCubeManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IKeyboardListener.h">
@@ -84,6 +72,27 @@
     <ClInclude Include="DirectCustomPrimitiveGeometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DirectTextureHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectViewProjectionWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCubeManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCubeFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsSingleCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -95,19 +104,7 @@
     <ClCompile Include="DirectCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DirectCubeFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectSingleCube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectRubicsCube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MouseHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectCubeManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RubicsCubeBuilder.cpp">
@@ -129,6 +126,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DirectCustomPrimitiveGeometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectTextureHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectViewProjectionWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectSharedFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RubicsCubeManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RubicsCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RubicsCubeFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RubicsSingleCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -24,7 +24,6 @@
 #include "..\DirectXTK\Inc\SpriteFont.h"
 #include "..\DirectXTK\Inc\VertexTypes.h"
 
-#include "DirectRubicsCube.h"
 #include "MouseHandler.h"
 
 using namespace DirectX;
@@ -42,20 +41,6 @@ using namespace DirectX;
 //--------------------------------------------------------------------------------------
 // Structures
 //--------------------------------------------------------------------------------------
-struct SimpleVertex
-{
-    XMFLOAT3 Pos;
-    XMFLOAT4 Color;
-};
-
-
-struct ConstantBuffer
-{
-	XMMATRIX mWorld;
-	XMMATRIX mView;
-	XMMATRIX mProjection;
-};
-
 
 class DirectCore
 {

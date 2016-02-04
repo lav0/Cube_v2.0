@@ -2,12 +2,15 @@
 
 #include "stdafx.h"
 #include "DirectCore.h"
-#include "DirectCubeManager.h"
+#include "RubicsCubeManager.h"
+#include "DirectFactory.h"
+#include "DirectTextureHolder.h"
 
 #include "../ConfigReader/include/ConfigAccessor.h"
 
 #include <conio.h>
 #include <algorithm>
+#include <memory>
 
 //--------------------------------------------------------------------------------------
 // Global Variables
@@ -59,16 +62,26 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
   if (FAILED(hr))
     return 0;
 
-  DirectCubeManager manager;
-  hr = manager.Initialize( core.GetImmediateContext(), 
-                           g_CubeDimention, 
-                           g_tessellation,
-                           g_wnd_width, 
-                           g_wnd_height
-                          );
+  RubicsCubeManager manager;
 
-  if (FAILED(hr))
-    return 0;
+  {
+    DirectTextureHolder texture_holder(core.GetImmediateContext());
+
+    auto renderer_factory = std::make_unique<DirectFactory>(
+      core.GetImmediateContext(), 
+      texture_holder.GetTexture(),
+      g_wnd_width,
+      g_wnd_height
+    );
+
+    hr = manager.Initialize(std::move(renderer_factory),
+      g_CubeDimention,
+      g_tessellation
+    );
+
+    if (FAILED(hr))
+      return 0;
+  }
 
   m_keyboard_listeners.push_back(&manager);
   m_mouse_listeners.push_back(&manager);

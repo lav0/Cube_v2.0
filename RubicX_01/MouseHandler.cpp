@@ -70,7 +70,7 @@ void MouseHandler::Listen(bool a_pressed, float a_x, float a_y)
       if (!m_rotation_axis.is_zero_vector())
         m_rotation_axis.normalize();
 
-      m_angle = xvc0 ^ xvc1;
+      m_angle = static_cast<float>(xvc0 ^ xvc1);
     }
 
     m_rotation_start = point;

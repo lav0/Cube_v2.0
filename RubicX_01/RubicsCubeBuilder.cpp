@@ -5,7 +5,7 @@
 //=============================================================================
 RubicsCubeBuilder::RubicsCubeBuilder(
   Dimention a_dimention,
-  std::unique_ptr<DirectCubeFactory>&& unq_factory
+  std::unique_ptr<RubicsCubeFactory>&& unq_factory
 )
 : m_dimention(a_dimention)
 , m_unq_factory(std::move(unq_factory))
@@ -18,13 +18,13 @@ RubicsCubeBuilder::~RubicsCubeBuilder()
 }
 
 //=============================================================================
-std::unique_ptr<DirectRubicsCube> RubicsCubeBuilder::build_cube() const
+std::unique_ptr<RubicsCube> RubicsCubeBuilder::build_cube() const
 {
   try
   {
     auto single_cubes = buildSubcubes();
 
-    return std::make_unique<DirectRubicsCube>(m_dimention, single_cubes);
+    return std::make_unique<RubicsCube>(m_dimention, single_cubes);
   }
   catch (std::exception& e)
   {
@@ -42,16 +42,16 @@ std::unique_ptr<DirectRubicsCube> RubicsCubeBuilder::build_cube() const
 float RubicsCubeBuilder::subcubeEdge() const
 {
   return (
-    DirectRubicsCube::RubicsCubeSize() - DirectRubicsCube::Clearance()
+    RubicsCube::RubicsCubeSize() - RubicsCube::Clearance()
   ) / m_dimention;
 }
 
 //=============================================================================
-std::vector<std::shared_ptr<DirectSingleCube>> RubicsCubeBuilder::buildSubcubes() const
+std::vector<std::shared_ptr<RubicsSingleCube>> RubicsCubeBuilder::buildSubcubes() const
 {
-  std::vector<std::shared_ptr<DirectSingleCube>> single_cubes;
+  std::vector<std::shared_ptr<RubicsSingleCube>> single_cubes;
 
-  auto bigcubeSize = DirectRubicsCube::RubicsCubeSize();
+  auto bigcubeSize = RubicsCube::RubicsCubeSize();
 
   float d_long = bigcubeSize / m_dimention;
   float d_edge = subcubeEdge();

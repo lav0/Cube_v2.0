@@ -4,10 +4,14 @@
 //=============================================================================
 DirectFactory::DirectFactory(
   _In_ ID3D11DeviceContext* deviceContext,
-  ID3D11ShaderResourceView* texture
+  ID3D11ShaderResourceView* texture,
+  unsigned int wnd_width,
+  unsigned int wnd_height
 )
 : m_context(deviceContext)
 , m_texture(texture)
+, m_wnd_width(wnd_width)
+, m_wnd_height(wnd_height)
 {
 }
 
@@ -44,6 +48,19 @@ std::unique_ptr<IEffectWrapper> DirectFactory::CreateEffect(
     view,
     projection
   );
+}
+
+//=============================================================================
+std::unique_ptr<IViewProjectionWrapper> DirectFactory::CreateViewProjection(
+  const float* eye_position
+)
+{
+  std::unique_ptr<IViewProjectionWrapper> wrapper = 
+    std::make_unique<DirectViewProjectionWrapper>();
+
+  wrapper->Initialize(m_wnd_width, m_wnd_height, eye_position);
+
+  return wrapper;
 }
 
 //=============================================================================
