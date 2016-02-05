@@ -1,6 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
 #include "rcbVector3D.h"
 
 class rcbUnitVector3D : public rcbVector3D

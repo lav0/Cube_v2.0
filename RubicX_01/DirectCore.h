@@ -24,7 +24,7 @@
 #include "..\DirectXTK\Inc\SpriteFont.h"
 #include "..\DirectXTK\Inc\VertexTypes.h"
 
-#include "MouseHandler.h"
+#include "RubicsCube\RubicsMouseHandler.h"
 
 using namespace DirectX;
 

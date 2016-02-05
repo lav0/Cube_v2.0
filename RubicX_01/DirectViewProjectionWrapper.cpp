@@ -26,7 +26,7 @@ bool DirectViewProjectionWrapper::Initialize(unsigned int width,
   auto view = DirectX::XMMatrixLookAtLH(eye, At, Up);
 
   auto proj = DirectX::XMMatrixPerspectiveFovLH(fovAngle,
-                                                width / (FLOAT)height,
+                                                width / (float)height,
                                                 1.f,
                                                 100.f
                                                 );

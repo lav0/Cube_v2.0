@@ -5,7 +5,8 @@
 
 #include "..\DirectXTK\Inc\GeometricPrimitive.h"
 #include "..\DirectXTK\Inc\Effects.h"
-#include "CustomPrimitiveBuilder.h"
+
+#include "RubicsCube\CustomPrimitiveBuilder.h"
 
 class DirectCustomPrimitiveGeometry : public DirectX::GeometricPrimitive
 {

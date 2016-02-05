@@ -1,6 +1,7 @@
 #pragma once
 
-#include "IFactory.h"
+#include "RubicsCube\IFactory.h"
+
 #include "DirectEffectWrapper.h"
 #include "DirectGeometry.h"
 #include "DirectViewProjectionWrapper.h"

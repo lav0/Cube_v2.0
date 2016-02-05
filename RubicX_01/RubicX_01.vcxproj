@@ -83,52 +83,56 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustomPrimitiveBuilder.h" />
-    <ClInclude Include="CustomPrimitiveCubeInfo.h" />
-    <ClInclude Include="CustomPrimitiveFunctions.h" />
     <ClInclude Include="DirectCore.h" />
-    <ClInclude Include="RubicsCubeFactory.h" />
-    <ClInclude Include="RubicsCubeManager.h" />
+    <ClInclude Include="DirectTimer.h" />
     <ClInclude Include="DirectEffectWrapper.h" />
     <ClInclude Include="DirectFactory.h" />
     <ClInclude Include="DirectGeometry.h" />
-    <ClInclude Include="RubicsCube.h" />
-    <ClInclude Include="RubicsSingleCube.h" />
     <ClInclude Include="DirectCustomPrimitiveGeometry.h" />
     <ClInclude Include="DirectTextureHolder.h" />
     <ClInclude Include="DirectViewProjectionWrapper.h" />
-    <ClInclude Include="IFactory.h" />
-    <ClInclude Include="IGeometry.h" />
-    <ClInclude Include="IKeyboardListener.h" />
-    <ClInclude Include="MouseHandler.h" />
-    <ClInclude Include="RubicsCubeBuilder.h" />
-    <ClInclude Include="SharedFunctions.h" />
-    <ClInclude Include="SHARED_DEFS.h" />
+    <ClInclude Include="RubicsCube\CustomPrimitiveBuilder.h" />
+    <ClInclude Include="RubicsCube\CustomPrimitiveCubeInfo.h" />
+    <ClInclude Include="RubicsCube\CustomPrimitiveFunctions.h" />
+    <ClInclude Include="RubicsCube\IEffectWrapper.h" />
+    <ClInclude Include="RubicsCube\IFactory.h" />
+    <ClInclude Include="RubicsCube\IGeometry.h" />
+    <ClInclude Include="RubicsCube\IKeyboardListener.h" />
+    <ClInclude Include="RubicsCube\IViewProjectionWrapper.h" />
+    <ClInclude Include="RubicsCube\RubicsCube.h" />
+    <ClInclude Include="RubicsCube\RubicsCubeBuilder.h" />
+    <ClInclude Include="RubicsCube\RubicsCubeFactory.h" />
+    <ClInclude Include="RubicsCube\RubicsCubeManager.h" />
+    <ClInclude Include="RubicsCube\RubicsMouseHandler.h" />
+    <ClInclude Include="RubicsCube\RubicsSingleCube.h" />
+    <ClInclude Include="RubicsCube\SharedFunctions.h" />
+    <ClInclude Include="RubicsCube\SHARED_DEFS.h" />
+    <ClInclude Include="RubicsCube\TimeMeasureDecorator.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeMeasureDecorator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CustomPrimitiveCubeInfo.cpp" />
     <ClCompile Include="DirectCore.cpp" />
-    <ClCompile Include="RubicsCubeFactory.cpp" />
-    <ClCompile Include="RubicsCubeManager.cpp" />
+    <ClCompile Include="DirectTimer.cpp" />
     <ClCompile Include="DirectCustomPrimitiveFunctions.cpp" />
     <ClCompile Include="DirectEffectWrapper.cpp" />
     <ClCompile Include="DirectFactory.cpp" />
     <ClCompile Include="DirectGeometry.cpp" />
-    <ClCompile Include="RubicsCube.cpp" />
     <ClCompile Include="DirectSharedFunctions.cpp" />
-    <ClCompile Include="RubicsSingleCube.cpp" />
     <ClCompile Include="DirectCustomPrimitiveGeometry.cpp" />
     <ClCompile Include="DirectTextureHolder.cpp" />
     <ClCompile Include="DirectViewProjectionWrapper.cpp" />
-    <ClCompile Include="MouseHandler.cpp" />
-    <ClCompile Include="RubicsCubeBuilder.cpp" />
+    <ClCompile Include="RubicsCube\CustomPrimitiveCubeInfo.cpp" />
+    <ClCompile Include="RubicsCube\RubicsCube.cpp" />
+    <ClCompile Include="RubicsCube\RubicsCubeBuilder.cpp" />
+    <ClCompile Include="RubicsCube\RubicsCubeFactory.cpp" />
+    <ClCompile Include="RubicsCube\RubicsCubeManager.cpp" />
+    <ClCompile Include="RubicsCube\RubicsMouseHandler.cpp" />
+    <ClCompile Include="RubicsCube\RubicsSingleCube.cpp" />
     <ClCompile Include="RubicX_01.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

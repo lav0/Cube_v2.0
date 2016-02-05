@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "SharedFunctions.h"
+#include "RubicsCube\SharedFunctions.h"
 
 #include <DirectXMath.h>
 

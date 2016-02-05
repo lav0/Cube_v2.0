@@ -2,9 +2,10 @@
 
 #include "stdafx.h"
 #include "DirectCore.h"
-#include "RubicsCubeManager.h"
+#include "RubicsCube\RubicsCubeManager.h"
 #include "DirectFactory.h"
 #include "DirectTextureHolder.h"
+#include "DirectTimer.h"
 
 #include "../ConfigReader/include/ConfigAccessor.h"
 
@@ -19,8 +20,8 @@ HINSTANCE               g_hInst = nullptr;
 HWND                    g_hWnd  = nullptr;
 Dimention               g_CubeDimention = 1;
 size_t                  g_tessellation = 2;
-long                    g_wnd_width  = 1024;
-long                    g_wnd_height = 800;
+long                    g_wnd_width;
+long                    g_wnd_height;
 bool                    g_mouse_down = false;
 short                   g_key_pressed = 0;
 bool                    g_shift_key_pressed = false;
@@ -85,6 +86,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
   m_keyboard_listeners.push_back(&manager);
   m_mouse_listeners.push_back(&manager);
+
+  DirectTimer timer;
     
   // Main message loop
   MSG msg = {0};
@@ -100,7 +103,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
       listerToInput();
 
       core.Clear();
-      manager.Render();
+      manager.Render(timer.Tick());
       core.SwapChain();
     }
   }
@@ -229,7 +232,7 @@ HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow )
     g_hInst = hInstance;
     RECT rc = { 0, 0, g_wnd_width, g_wnd_height };
     AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
-    g_hWnd = CreateWindow( L"TutorialWindowClass", L"Direct3D 11 Tutorial 4: 3D Spaces", WS_OVERLAPPEDWINDOW,
+    g_hWnd = CreateWindow( L"TutorialWindowClass", L"Direct3D Rubic's CUBE", WS_OVERLAPPEDWINDOW,
                            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, hInstance,
                            NULL );
     if( !g_hWnd )

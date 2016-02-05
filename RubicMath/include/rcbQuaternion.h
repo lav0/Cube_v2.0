@@ -1,6 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
 #include "rcbUnitVector3D.h"
 
 
@@ -47,7 +46,7 @@ public:
 
   rcbQuaternion conjugate() const;
   
-  rcbQuaternion backward();
+  rcbQuaternion backward() const;
   
   rcbVector3D turn(const rcbVector3D& a_vc);
   

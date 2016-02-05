@@ -16,37 +16,22 @@
     <Filter Include="Header Files\Utilities">
       <UniqueIdentifier>{fe26b46a-08aa-4e3c-91d4-79a3533efb08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\RubicsCube">
+      <UniqueIdentifier>{799c2fca-ff3d-4506-8f26-307411b8e437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RubicsCube">
+      <UniqueIdentifier>{bc2db05c-52c4-4048-a73d-cfc0e966dae3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DirectCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IKeyboardListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TimeMeasureDecorator.h">
       <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="RubicsCubeBuilder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IGeometry.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirectGeometry.h">
       <Filter>Header Files</Filter>
@@ -55,18 +40,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirectEffectWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomPrimitiveBuilder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomPrimitiveCubeInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SHARED_DEFS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomPrimitiveFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirectCustomPrimitiveGeometry.h">
@@ -78,36 +51,72 @@
     <ClInclude Include="DirectViewProjectionWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SharedFunctions.h">
+    <ClInclude Include="DirectTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RubicsCubeManager.h">
+    <ClInclude Include="RubicsCube\CustomPrimitiveBuilder.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\CustomPrimitiveCubeInfo.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\CustomPrimitiveFunctions.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\IEffectWrapper.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\IFactory.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\IGeometry.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\IKeyboardListener.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\IViewProjectionWrapper.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\RubicsCube.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\RubicsCubeBuilder.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\RubicsCubeFactory.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\RubicsCubeManager.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\RubicsMouseHandler.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\RubicsSingleCube.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\SHARED_DEFS.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\SharedFunctions.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="RubicsCube\TimeMeasureDecorator.h">
+      <Filter>Header Files\RubicsCube</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RubicsCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RubicsCubeFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RubicsSingleCube.h">
+    <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RubicX_01.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DirectCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RubicsCubeBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DirectFactory.cpp">
@@ -117,9 +126,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DirectEffectWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomPrimitiveCubeInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DirectCustomPrimitiveFunctions.cpp">
@@ -137,16 +143,31 @@
     <ClCompile Include="DirectSharedFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RubicsCubeManager.cpp">
+    <ClCompile Include="DirectTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RubicsCube.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="RubicsCube\CustomPrimitiveCubeInfo.cpp">
+      <Filter>Source Files\RubicsCube</Filter>
     </ClCompile>
-    <ClCompile Include="RubicsCubeFactory.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="RubicsCube\RubicsCube.cpp">
+      <Filter>Source Files\RubicsCube</Filter>
     </ClCompile>
-    <ClCompile Include="RubicsSingleCube.cpp">
+    <ClCompile Include="RubicsCube\RubicsCubeBuilder.cpp">
+      <Filter>Source Files\RubicsCube</Filter>
+    </ClCompile>
+    <ClCompile Include="RubicsCube\RubicsCubeFactory.cpp">
+      <Filter>Source Files\RubicsCube</Filter>
+    </ClCompile>
+    <ClCompile Include="RubicsCube\RubicsCubeManager.cpp">
+      <Filter>Source Files\RubicsCube</Filter>
+    </ClCompile>
+    <ClCompile Include="RubicsCube\RubicsMouseHandler.cpp">
+      <Filter>Source Files\RubicsCube</Filter>
+    </ClCompile>
+    <ClCompile Include="RubicsCube\RubicsSingleCube.cpp">
+      <Filter>Source Files\RubicsCube</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

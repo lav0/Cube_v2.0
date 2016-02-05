@@ -1,7 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
-
 enum eCubeSide {
   CS_DOWN = 1,
   CS_UP   = 2,

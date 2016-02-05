@@ -1,6 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
 #include "rcbQuaternion.h"
 
 class rcbLine3D

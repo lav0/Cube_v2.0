@@ -1,7 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
-
 #include <math.h>
 
 bool is_zero_dbl(double a);

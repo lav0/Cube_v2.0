@@ -1,6 +1,7 @@
 #pragma once
 
-#include "IGeometry.h"
+#include "RubicsCube\IViewProjectionWrapper.h"
+
 #include <DirectXMath.h>
 
 static const float fovAngle = DirectX::XM_PIDIV2;
@@ -12,8 +13,8 @@ public:
   DirectViewProjectionWrapper();
 
   bool Initialize(unsigned int width,
-    unsigned int height,
-    const float* eye_position) override;
+                  unsigned int height,
+                  const float* eye_position) override;
 
   void* GetView() const;
   void* GetProjection() const;

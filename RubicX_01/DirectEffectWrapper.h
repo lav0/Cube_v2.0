@@ -1,6 +1,7 @@
 #pragma once
 
-#include "IGeometry.h"
+#include "RubicsCube\IEffectWrapper.h"
+
 #include "DirectGeometry.h"
 #include <wrl.h>
 

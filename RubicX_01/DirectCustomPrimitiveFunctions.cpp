@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CustomPrimitiveFunctions.h"
+#include "RubicsCube\CustomPrimitiveFunctions.h"
 
 #include "..\DirectXTK\Inc\GeometricPrimitive.h"
 

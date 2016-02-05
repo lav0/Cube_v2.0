@@ -1,14 +1,16 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "../RubicX_01/MouseHandler.h"
-#include "../RubicX_01/MouseHandler.cpp"
+#include "../RubicX_01/RubicsMouseHandler.h"
+#include "../RubicX_01/RubicsMouseHandler.cpp"
 
 #include "../RubicX_01/DirectCustomPrimitiveFunctions.cpp"
 
+#include <DirectXMath.h>
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace DirectX;
-using namespace DirectX::SimpleMath;
+//using namespace DirectX::SimpleMath;
 
 
 namespace UnitTestX_01
@@ -42,7 +44,7 @@ namespace UnitTestX_01
 
       float radius = 2.59807611f;
 
-      MouseHandler handler(
+      RubicsMouseHandler handler(
         centre,
         eye_direction,
         eye_up_of_view,
