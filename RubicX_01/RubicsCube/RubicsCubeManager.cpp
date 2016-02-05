@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "RubicsCubeManager.h"
 
 #include "RubicsCubeBuilder.h"

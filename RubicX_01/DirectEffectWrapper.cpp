@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "DirectEffectWrapper.h"
 #include "../DirectXTK/Src/PlatformHelpers.h"
 #include <wrl.h>
@@ -29,6 +29,7 @@ static void CreateInputLayout(
   //SetDebugObjectName(*pInputLayout, "DirectXTK:GeometricPrimitive");
 }
 
+//=============================================================================
 XMMATRIX to_drx_matrix(const rcbQuaternion& q)
 {
   auto x = static_cast<float>(q.vect_part().getX());

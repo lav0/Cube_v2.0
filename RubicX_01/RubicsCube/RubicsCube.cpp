@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "RubicsCube.h"
 
 #include "TimeMeasureDecorator.h"

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "CustomPrimitiveCubeInfo.h"
 
 std::map<int, eCubeSide> CustomPrimitiveCubeInfo::composeFacesMap()

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "RubicsSingleCube.h"
 //#include "../DirectXTK/Src/PlatformHelpers.h"
 

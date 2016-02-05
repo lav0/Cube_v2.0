@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "RubicsCube\SharedFunctions.h"
 
 #include <DirectXMath.h>

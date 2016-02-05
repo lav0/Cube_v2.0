@@ -1,5 +1,4 @@
 
-#include "stdafx.h"
 #include "DirectCore.h"
 
 #define EYE_TO_SCREEN 0.3f

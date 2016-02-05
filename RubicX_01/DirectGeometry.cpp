@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "DirectGeometry.h"
 
 using namespace DirectX;

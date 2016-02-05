@@ -1,11 +1,5 @@
 #pragma once
 
-//#include "../stdafx.h"
-
-#include <vector>
-#include <array>
-#include <memory>
-#include <algorithm>
 
 #include "RubicsCubeFactory.h"
 

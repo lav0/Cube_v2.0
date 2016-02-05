@@ -1,17 +1,13 @@
-
-
-#include "stdafx.h"
 #include "DirectCore.h"
-#include "RubicsCube\RubicsCubeManager.h"
 #include "DirectFactory.h"
 #include "DirectTextureHolder.h"
 #include "DirectTimer.h"
 
+#include "RubicsCube\RubicsCubeManager.h"
+
 #include "../ConfigReader/include/ConfigAccessor.h"
 
 #include <conio.h>
-#include <algorithm>
-#include <memory>
 
 //--------------------------------------------------------------------------------------
 // Global Variables

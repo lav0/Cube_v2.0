@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "DirectCustomPrimitiveGeometry.h"
 
 #include "../RubicMath/include/rcbVector3D.h"
