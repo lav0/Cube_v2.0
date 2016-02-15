@@ -19,8 +19,6 @@ public:
     std::vector<std::shared_ptr<RubicsSingleCube>> single_cubes
   );
 
-  virtual ~RubicsCube() {}
-
   void Rotate(const rcbQuaternion& a_quaternion);
 
   void TurnFace(const TurnCommand&);
