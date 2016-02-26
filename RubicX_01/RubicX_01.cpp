@@ -66,7 +66,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
     auto renderer_factory = std::make_unique<DirectFactory>(
       core.GetImmediateContext(), 
-      texture_holder.GetTexture(),
+      texture_holder.GetTexture(L"TextureColors.dds"),
       g_wnd_width,
       g_wnd_height
     );

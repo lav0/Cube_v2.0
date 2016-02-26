@@ -3,6 +3,8 @@
 
 #include "..\DirectXTK\Inc\DDSTextureLoader.h"
 
+#include <unordered_map>
+
 class DirectTextureHolder
 {
 public:
@@ -11,14 +13,16 @@ public:
 
   ~DirectTextureHolder();
 
-  ID3D11ShaderResourceView* GetTexture();
+  ID3D11ShaderResourceView* GetTexture(const wchar_t* texture_name);
 
 private:
 
-  bool load();
+  bool load(const wchar_t* texture_name);
 
 private:
 
-  ID3D11DeviceContext*      m_deviceContext;
-  ID3D11ShaderResourceView* m_texture;
+  ID3D11DeviceContext*         m_deviceContext;
+  std::unordered_map<
+    const wchar_t*,
+    ID3D11ShaderResourceView*> m_texture_collection;
 };

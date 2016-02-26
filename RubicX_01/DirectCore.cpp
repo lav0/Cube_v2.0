@@ -50,7 +50,7 @@ HRESULT DirectCore::InitDevice()
     UINT createDeviceFlags = 0;
 #ifdef _DEBUG
     // Have no idea why, but on Windows 10 next line causes D3D11CreateDeviceAndSwapChain to fail
-    //createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+    // createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
     D3D_DRIVER_TYPE driverTypes[] =

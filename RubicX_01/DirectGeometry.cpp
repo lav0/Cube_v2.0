@@ -5,7 +5,7 @@ using namespace DirectX;
 
 //=============================================================================
 DirectGeometry::DirectGeometry(
-  std::unique_ptr<DirectX::GeometricPrimitive>&& geometry
+  std::unique_ptr<GeometricPrimitive>&& geometry
 )
 : m_geometry(std::move(geometry))
 {

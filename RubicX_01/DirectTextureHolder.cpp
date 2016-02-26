@@ -4,40 +4,54 @@
 //=============================================================================
 DirectTextureHolder::DirectTextureHolder(ID3D11DeviceContext* a_deviceContext)
 : m_deviceContext(a_deviceContext)
-, m_texture(nullptr)
 {}
 
 //=============================================================================
 DirectTextureHolder::~DirectTextureHolder()
 {
-  if (m_texture) m_texture->Release(); 
+  for (auto item : m_texture_collection)
+  {
+    if (item.second)
+      item.second->Release();
+  }
 }
 
 //=============================================================================
-ID3D11ShaderResourceView* DirectTextureHolder::GetTexture() {
-  if (!m_texture)
+ID3D11ShaderResourceView* DirectTextureHolder::GetTexture(const wchar_t* texture_name)
+{
+  auto itr = m_texture_collection.find(texture_name);
+
+  if (itr == m_texture_collection.end())
   {
-    auto succeeded = load();
+    auto succeeded = load(texture_name);
 
     if (!succeeded)
     {
       ::MessageBoxA(nullptr, "Texture not loaded", "Error", 0);
+
+      return nullptr;
     }
   }
-  return m_texture;
+
+  return m_texture_collection[texture_name];
 }
 
 //=============================================================================
-bool DirectTextureHolder::load() {
+bool DirectTextureHolder::load(const wchar_t* texture_name)
+{
   ID3D11Device* device;
   m_deviceContext->GetDevice(&device);
 
+  ID3D11ShaderResourceView* texture(nullptr);
+
   HRESULT hr = DirectX::CreateDDSTextureFromFile(
     device,
-    L"TextureColors.dds",
+    texture_name,
     nullptr,
-    &m_texture
-  );
+    &texture
+    );
+
+  m_texture_collection.emplace(texture_name, texture);
 
   return SUCCEEDED(hr);
 }
