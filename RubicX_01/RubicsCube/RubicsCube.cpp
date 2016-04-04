@@ -16,11 +16,11 @@ RubicsCube::RubicsCube(
  )
  : m_subcubes(std::move(single_cubes))
  , m_quat_position(staticQuaternion)
- , m_cube_orts{{ 
+ , m_cube_orts({ 
     rcbUnitVector3D::ort_x(), 
     rcbUnitVector3D::ort_y(), 
     rcbUnitVector3D::ort_z()
-  }}
+  })
  , m_dimention(a_dimention)
  , m_quat_rotation_during_turning(staticQuaternion)
 {  
